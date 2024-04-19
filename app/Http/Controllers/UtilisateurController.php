@@ -19,4 +19,9 @@ class UtilisateurController extends Controller
         // Passer les données à la vue
         return view('utilisateur.dashboard', compact('commandes', 'produits'));
     }
+
+    public function about(){
+
+        return view('about');
+    }
 }

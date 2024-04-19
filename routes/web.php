@@ -34,7 +34,11 @@ Route::post('/login', [LoginController::class, 'login']);
 //     return view('welcome');
 // });
 
-
+Route::get('/utilisateur/about',function()
+{
+return view('about');
+    
+})->name('about');
 
 use App\Http\Controllers\ProduitController;
 
@@ -61,7 +65,7 @@ Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy'])->
 
 // Route pour le tableau de bord de l'utilisateur
 Route::get('/utilisateur/dashboard', [UtilisateurController::class, 'index'])->name('utilisateur.dashboard')->middleware(['auth', 'role:utilisateur']);
-
+// Route::get('/utilisateur/aboutsus',[UtilisateurController::class,'about'])->name('aboutus');
 // Route pour le tableau de bord du pharmacien
 Route::get('/pharmacien/dashboard', [PharmacienController::class, 'index'])->name('pharmacien.dashboard')->middleware(['auth', 'role:pharmacien']);
 
