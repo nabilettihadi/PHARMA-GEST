@@ -9,20 +9,49 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gradient-to-b from-blue-400 to-white min-h-screen flex items-center justify-center">
-    <div class="max-w-2xl w-full bg-white p-8 rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold text-center mb-8">Détails du Produit</h1>
-        <p><strong>Nom:</strong> {{ $produit->nom }}</p>
-        <p><strong>Description:</strong> {{ $produit->description }}</p>
-        <p><strong>Prix:</strong> {{ $produit->prix }}</p>
-        <p><strong>Quantité:</strong> {{ $produit->quantite }}</p>
-        <p><strong>Photo:</strong></p>
-        @if ($produit->photo)
-        <img src="{{ asset('storage/app/produits/' . $produit->photo) }}" alt="{{ $produit->nom }}" width="300">
-        @else
-        Pas de photo disponible
-        @endif
-    </div>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <!-- Barre de navigation -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="/" class="text-2xl font-semibold text-gray-800">Pharma<span
+                    class="text-blue-500">Care</span></a>
+            <ul class="flex space-x-4">
+                <li><a href="#" class="text-gray-600 hover:text-gray-800">Accueil</a></li>
+                <li><a href="#" class="text-gray-600 hover:text-gray-800">À propos</a></li>
+                <li><a href="#" class="text-gray-600 hover:text-gray-800">Produits</a></li>
+                <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
+                <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <h1 class="text-3xl font-bold text-center mb-8">Détails du Produit</h1>
+            <p><strong>Nom:</strong> {{ $produit->nom }}</p>
+            <p><strong>Description:</strong> {{ $produit->description }}</p>
+            <p><strong>Prix:</strong> {{ $produit->prix }}</p>
+            <p><strong>Quantité:</strong> {{ $produit->quantite }}</p>
+            <p><strong>Photo:</strong></p>
+            @if ($produit->photo)
+            <img src="{{ asset('storage/produits' . $produit->photo) }}" alt="{{ $produit->nom }}"
+                class="mx-auto" width="300">
+            @else
+            <p class="text-center">Pas de photo disponible</p>
+            @endif
+        </div>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; {{ date('Y') }} PharmaCare. Tous droits réservés.</p>
+        </div>
+    </footer>
+
 </body>
 
 </html>
+

@@ -31,7 +31,7 @@ class ProduitController extends Controller
         $produit = Produit::create($request->all());
 
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('produits');
+            $photoPath = $request->file('photo')->store('produits', 'public');
             $produit->photo = $photoPath;
             $produit->save();
         }
@@ -65,7 +65,7 @@ class ProduitController extends Controller
         $produit->update($request->all());
 
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('produits');
+            $photoPath = $request->file('photo')->store('produits', 'public');
             $produit->photo = $photoPath;
             $produit->save();
         }
@@ -81,4 +81,3 @@ class ProduitController extends Controller
         return redirect()->route('produits.index')->with('success', 'Produit supprimé avec succès!');
     }
 }
-

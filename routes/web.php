@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UtilisateurDashboardController;
+use App\Http\Controllers\PharmacienDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,10 +16,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\UtilisateurDashboardController;
-use App\Http\Controllers\PharmacienDashboardController;
+
 // Route pour afficher le formulaire d'inscription
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 

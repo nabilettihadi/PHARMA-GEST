@@ -11,7 +11,7 @@ class CreatePharmaciensTable extends Migration
         Schema::create('pharmaciens', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('utilisateur_id');
-            $table->foreign('utilisateur_id')->references('id')->on('utilisateurs');
+            $table->foreign('utilisateur_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

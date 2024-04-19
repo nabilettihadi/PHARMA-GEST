@@ -17,8 +17,8 @@ class Pharmacien extends Model
         'utilisateur_id',
     ];
 
-    public function utilisateur()  // Consider using a more descriptive name (e.g., user)
+    public function utilisateur()  
     {
-        return $this->belongsTo(User::class, 'utilisateur_id'); // Assuming the user model is named 'User'
+        return $this->belongsTo(User::class, 'utilisateur_id');
     }
 }

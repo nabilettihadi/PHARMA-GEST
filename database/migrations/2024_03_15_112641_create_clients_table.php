@@ -13,7 +13,7 @@ class CreateClientsTable extends Migration
             $table->unsignedBigInteger('utilisateur_id');
             $table->string('adresse');
             $table->string('telephone');
-            $table->foreign('utilisateur_id')->references('id')->on('utilisateurs');
+            $table->foreign('utilisateur_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

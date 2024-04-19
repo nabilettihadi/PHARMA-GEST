@@ -9,6 +9,15 @@
 </head>
 
 <body class="bg-gray-100 font-sans antialiased">
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="/" class="text-2xl font-semibold text-gray-800">Pharma<span
+                    class="text-blue-500">Care</span></a>
+            <ul class="flex space-x-4">
+                <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <div id="app" class="min-h-screen flex justify-center items-center bg-cover bg-center" style="background-image: url('https://source.unsplash.com/1600x900/?pharmacy')">
         <div class="w-full max-w-sm">
@@ -45,7 +54,12 @@
             </div>
         </div>
     </div>
-
+<!-- Pied de page -->
+<footer class="bg-gray-900 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+        <p>&copy; {{ date('Y') }} PharmaCare. Tous droits réservés.</p>
+    </div>
+</footer>
 </body>
 
 </html>
