@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\UtilisateurDashboardController;
-use App\Http\Controllers\PharmacienDashboardController;
+use App\Http\Controllers\UtilisateurController;
+use App\Http\Controllers\PharmacienController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +43,7 @@ Route::get('/produits/{produit}', [ProduitController::class, 'show'])->name('pro
 Route::get('/produits/{produit}/edit', [ProduitController::class, 'edit'])->name('produits.edit');
 Route::put('/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
 Route::delete('/produits/{produit}', [ProduitController::class, 'destroy'])->name('produits.destroy');
-
+Route::get('/statistiques', [ProduitController::class, 'statistiques'])->name('statistiques.index');
 
 use App\Http\Controllers\CommandeController;
 
@@ -58,10 +58,10 @@ Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy'])->
 
 
 // Route pour le tableau de bord de l'utilisateur
-Route::get('/utilisateur/dashboard', [UtilisateurDashboardController::class, 'index'])->name('utilisateur.dashboard')->middleware(['auth', 'role:utilisateur']);
+Route::get('/utilisateur/dashboard', [UtilisateurController::class, 'index'])->name('utilisateur.dashboard')->middleware(['auth', 'role:utilisateur']);
 
 // Route pour le tableau de bord du pharmacien
-Route::get('/pharmacien/dashboard', [PharmacienDashboardController::class, 'index'])->name('pharmacien.dashboard')->middleware(['auth', 'role:pharmacien']);
+Route::get('/pharmacien/dashboard', [PharmacienController::class, 'index'])->name('pharmacien.dashboard')->middleware(['auth', 'role:pharmacien']);
 
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/dashboard', function () {

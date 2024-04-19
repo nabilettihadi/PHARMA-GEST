@@ -16,13 +16,13 @@
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <a href="/" class="text-2xl font-semibold text-gray-800">Pharma<span
                     class="text-blue-500">Care</span></a>
-            {{-- <ul class="flex space-x-4">
-                <li><a href="#" class="text-gray-600 hover:text-gray-800">Accueil</a></li>
-                <li><a href="#" class="text-gray-600 hover:text-gray-800">À propos</a></li>
+            <ul class="flex space-x-4">
+                <li><a href="/" class="text-gray-600 hover:text-gray-800">Accueil</a></li>
+                {{-- <li><a href="#" class="text-gray-600 hover:text-gray-800">À propos</a></li>
                 <li><a href="#" class="text-gray-600 hover:text-gray-800">Produits</a></li>
                 <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
-                <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
-            </ul> --}}
+                <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li> --}}
+            </ul>
         </div>
     </nav>
 

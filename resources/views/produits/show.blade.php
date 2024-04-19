@@ -30,17 +30,24 @@
     <main class="container mx-auto px-4 py-12">
         <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-3xl font-bold text-center mb-8">Détails du Produit</h1>
-            <p><strong>Nom:</strong> {{ $produit->nom }}</p>
-            <p><strong>Description:</strong> {{ $produit->description }}</p>
-            <p><strong>Prix:</strong> {{ $produit->prix }}</p>
-            <p><strong>Quantité:</strong> {{ $produit->quantite }}</p>
-            <p><strong>Photo:</strong></p>
-            @if ($produit->photo)
-            <img src="{{ asset('storage/produits' . $produit->photo) }}" alt="{{ $produit->nom }}"
-                class="mx-auto" width="300">
-            @else
-            <p class="text-center">Pas de photo disponible</p>
-            @endif
+            <div class="flex justify-center mb-6">
+                @if ($produit->photo)
+                <img src="{{ asset('storage/' . $produit->photo) }}" alt="{{ $produit->nom }}"
+                    class="border border-gray-300 shadow-lg rounded-lg" style="max-width: 300px; max-height: 300px;">
+                @else
+                <p class="text-center">Pas de photo disponible</p>
+                @endif
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <p class="font-semibold">Nom:</p>
+                <p>{{ $produit->nom }}</p>
+                <p class="font-semibold">Description:</p>
+                <p>{{ $produit->description }}</p>
+                <p class="font-semibold">Prix:</p>
+                <p>{{ $produit->prix }}</p>
+                <p class="font-semibold">Quantité:</p>
+                <p>{{ $produit->quantite }}</p>
+            </div>
         </div>
     </main>
 
@@ -54,4 +61,5 @@
 </body>
 
 </html>
+
 

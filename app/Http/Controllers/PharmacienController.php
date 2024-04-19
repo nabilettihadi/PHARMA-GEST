@@ -13,14 +13,17 @@ class PharmacienController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function index()
+    // {
+    //     $pharmaciens = Pharmacien::all(); // Fetch all pharmacists
+
+    //     return view('pharmaciens.index', compact('pharmaciens')); // Pass pharmacists to the index view
+    // }
+
     public function index()
     {
-        $pharmaciens = Pharmacien::all(); // Fetch all pharmacists
-
-        return view('pharmaciens.index', compact('pharmaciens')); // Pass pharmacists to the index view
+        return view('pharmacien.dashboard');
     }
-
-
 
     /**
      * Show the form for creating a new resource.

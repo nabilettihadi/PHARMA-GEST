@@ -39,12 +39,11 @@
                     class="bg-white text-blue-500 font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 hover:text-white transition duration-300 inline-block">Voir
                     les Produits</a>
             </div>
-
             <!-- Section Statistiques -->
             <div class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
                 <h2 class="text-2xl font-semibold mb-4">Statistiques</h2>
                 <p class="text-lg mb-4">Consultez les statistiques de vente, les stocks, etc.</p>
-                <a href="#" class="bg-white text-purple-500 font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-purple-600 hover:text-white transition duration-300 inline-block">Voir
+                <a href="{{ route('statistiques.index') }}" class="bg-white text-purple-500 font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-purple-600 hover:text-white transition duration-300 inline-block">Voir
                     les Statistiques</a>
             </div>
         </div>

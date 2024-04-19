@@ -17,7 +17,7 @@
             <a href="/" class="text-2xl font-semibold text-gray-800">Pharma<span
                     class="text-blue-500">Care</span></a>
             <ul class="flex space-x-4">
-                <li><a href="#" class="text-gray-600 hover:text-gray-800">Accueil</a></li>
+                <li><a href="/" class="text-gray-600 hover:text-gray-800">Accueil</a></li>
                 <li><a href="#" class="text-gray-600 hover:text-gray-800">À propos</a></li>
                 <li><a href="#" class="text-gray-600 hover:text-gray-800">Produits</a></li>
                 <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
@@ -33,6 +33,20 @@
             <form action="{{ route('produits.update', $produit->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+
+                <div class="mb-4">
+                    <label for="photo" class="block text-sm font-bold mb-2">Photo</label>
+                    <input type="file" name="photo" id="photo" class="form-input w-full">
+                    @if($produit->photo_url)
+                    <div class="mt-2">
+                        <label class="block text-sm font-medium">Photo actuelle :</label>
+                        <img src="{{ asset('storage/' . $produit->photo) }}" alt="{{ $produit->nom }}"
+                            class="mt-2 h-20 object-cover rounded-lg shadow-md">
+                    </div>
+                    @else
+                    <p>Aucune photo disponible.</p>
+                    @endif
+                </div>
                 <div class="mb-4">
                     <label for="nom" class="block text-sm font-bold mb-2">Nom</label>
                     <input type="text" name="nom" id="nom" class="form-input w-full" value="{{ $produit->nom }}"
@@ -53,19 +67,7 @@
                     <input type="number" name="quantite" id="quantite" class="form-input w-full"
                         value="{{ $produit->quantite }}" required>
                 </div>
-                <div class="mb-4">
-                    <label for="photo" class="block text-sm font-bold mb-2">Photo</label>
-                    <input type="file" name="photo" id="photo" class="form-input w-full">
-                    @if($produit->photo_url)
-                    <div class="mt-2">
-                        <label class="block text-sm font-medium">Photo actuelle :</label>
-                        <img src="{{ asset('storage/' . $produit->photo) }}" alt="{{ $produit->nom }}"
-                            class="mt-2 h-20 object-cover rounded-lg shadow-md">
-                    </div>
-                    @else
-                    <p>Aucune photo disponible.</p>
-                    @endif
-                </div>
+                
                 
                 <button type="submit"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Modifier</button>
