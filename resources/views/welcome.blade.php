@@ -63,6 +63,21 @@
         </div>
     </main>
 
+    <!-- Contenu principal -->
+<main class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        @foreach ($produits as $produit)
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                <img src="{{ asset('storage/' . $produit->photo) }}" alt="{{ $produit->nom }}" class="w-full mb-4 rounded-lg">
+                <h2 class="text-xl font-semibold mb-2">{{ $produit->nom }}</h2>
+                <p class="text-gray-600">{{ $produit->description }}</p>
+                <p class="text-gray-600 mt-2">Prix : {{ number_format($produit->prix, 2, ',', ' ') }} €</p>
+                <a href="#" class="block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-4 text-center">Acheter</a>
+            </div>
+        @endforeach
+    </div>
+</main>
+
     <!-- Pied de page -->
     <footer class="bg-gray-900 text-white py-8">
         <div class="container mx-auto px-4 text-center">
@@ -73,3 +88,5 @@
 </body>
 
 </html>
+
+

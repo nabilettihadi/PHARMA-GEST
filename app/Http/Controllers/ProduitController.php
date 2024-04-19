@@ -13,7 +13,11 @@ class ProduitController extends Controller
         $produits = Produit::all();
         return view('produits.index', compact('produits'));
     }
-
+    public function welcome()
+    {
+        $produits = Produit::all();
+        return view('welcome', compact('produits'));
+    }
     public function create()
     {
         return view('produits.create');

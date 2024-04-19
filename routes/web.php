@@ -30,9 +30,11 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
 
 use App\Http\Controllers\ProduitController;
 
@@ -44,7 +46,7 @@ Route::get('/produits/{produit}/edit', [ProduitController::class, 'edit'])->name
 Route::put('/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
 Route::delete('/produits/{produit}', [ProduitController::class, 'destroy'])->name('produits.destroy');
 Route::get('/statistiques', [ProduitController::class, 'statistiques'])->name('statistiques.index');
-
+Route::get('/', [ProduitController::class, 'welcome'])->name('welcome');
 use App\Http\Controllers\CommandeController;
 
 // Routes pour les commandes
