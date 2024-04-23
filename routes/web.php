@@ -29,7 +29,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // Route pour traiter la connexion
 Route::post('/login', [LoginController::class, 'login']);
 
-
+Route::post('/logout',[LoginController::class, 'logout'])->name('logout');
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -61,6 +61,15 @@ Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('
 Route::get('/commandes/{commande}/edit', [CommandeController::class, 'edit'])->name('commandes.edit');
 Route::put('/commandes/{commande}', [CommandeController::class, 'update'])->name('commandes.update');
 Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy'])->name('commandes.destroy');
+
+
+use App\Http\Controllers\ContactController;
+
+// Route pour afficher le formulaire de contact
+Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
+
+// Route pour traiter le formulaire de contact
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 
 // Route pour le tableau de bord de l'utilisateur

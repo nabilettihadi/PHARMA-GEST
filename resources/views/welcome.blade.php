@@ -25,6 +25,7 @@
                 <li><a href="#" class="text-gray-600 hover:text-gray-800">Produits</a></li>
                 <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
                 <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
+                <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
             </ul>
         </div>
     </nav>
