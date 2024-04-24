@@ -20,7 +20,7 @@
             <ul class="flex space-x-4">
                 <li><a href="#" class="text-gray-600 hover:text-gray-800">Accueil</a></li>
 
-                <li><a href="{{ route('produits.index') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
+                <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
                 <li><a href="#" class="text-gray-600 hover:text-gray-800">À propos</a></li>
 
                 <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-gray-600 hover:text-gray-800">Déconnexion</a></li>

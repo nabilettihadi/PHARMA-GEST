@@ -18,6 +18,15 @@ class ProduitController extends Controller
         $produits = Produit::all();
         return view('welcome', compact('produits'));
     }
+    public function Page()
+    {
+        // Récupérez tous les produits depuis la base de données
+        $produits = Produit::all();
+
+        // Retournez la vue 'produits.page' en passant les produits récupérés comme données
+        return view('produits.page', compact('produits'));
+    }
+
     public function create()
     {
         return view('produits.create');
@@ -87,18 +96,17 @@ class ProduitController extends Controller
     }
 
     public function statistiques()
-{
-    
-    $statistiquesQuantite = Produit::select('nom', DB::raw('SUM(quantite) as quantite_totale'))
-        ->groupBy('nom')
-        ->get();
+    {
 
-    $statistiquesMontant = Produit::select('nom', DB::raw('SUM(prix * quantite) as montant_total'))
-        ->groupBy('nom')
-        ->get();
+        $statistiquesQuantite = Produit::select('nom', DB::raw('SUM(quantite) as quantite_totale'))
+            ->groupBy('nom')
+            ->get();
 
-    
-    return view('statistiques.index', compact('statistiquesQuantite', 'statistiquesMontant'));
-}
+        $statistiquesMontant = Produit::select('nom', DB::raw('SUM(prix * quantite) as montant_total'))
+            ->groupBy('nom')
+            ->get();
 
+
+        return view('statistiques.index', compact('statistiquesQuantite', 'statistiquesMontant'));
+    }
 }
