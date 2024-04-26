@@ -32,7 +32,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // Route pour traiter la connexion
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::post('/logout',[LoginController::class, 'logout'])->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::get('/utilisateur/about',function()

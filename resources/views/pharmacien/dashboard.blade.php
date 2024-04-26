@@ -31,7 +31,7 @@
                 <li><a href="{{ route('produits.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-cube mr-2"></i>Gestion des produits</a></li>
                 <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
                 <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-cogs mr-2"></i>Paramètres</a></li>
-                <li><a href="/logout" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
+                <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
             </ul>
         </nav>
         <!-- Pied de page du sidebar -->

@@ -31,8 +31,13 @@
                 <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
             </ul>
             <ul class="hidden md:flex space-x-4 items-center">
+                @guest
                 <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800"><i
                             class="fas fa-user-plus mr-1"></i>Inscription</a></li>
+                
+                <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800"><i
+                            class="fas fa-user-plus mr-1"></i>Connexion</a></li>
+                @endguest
                 <li>
                     <a href="#"
                         class="flex items-center justify-center rounded-md bg-blue-500 px-4 py-2 text-white font-semibold hover:bg-blue-600 transition duration-300">
@@ -44,7 +49,10 @@
         </div>
         <ul class="md:hidden bg-white absolute top-0 left-0 right-0 mt-16 rounded-lg shadow-md py-4 px-6 space-y-4 text-center"
             style="display: none;" id="burgerMenu">
+            @guest
             <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
+            <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
+            @endguest
             <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
             <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
             <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
@@ -139,7 +147,8 @@
                         <h3 class="text-lg font-semibold mb-2 text-center">Notre Équipe</h3>
                     </div>
                     <div class="bg-gray-100 px-2 relative bottom-2 rounded-b-lg">
-                        <p class="text-gray-600 answer" id="equipe" style="display: none;">Notre équipe comprend des
+                        <p class="text-gray-600 answer" id="equipe" style="display: none;">Notre équipe comprend
+                            des
                             médecins, des pharmaciens, des spécialistes en santé et des infirmiers, tous prêts à vous
                             offrir un service de qualité.</p>
                     </div>
@@ -161,41 +170,44 @@
                 </div>
             </div>
         </div>
-<!-- Section Produits -->
-<div id="produits" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-    <!-- Product Cards -->
-    @foreach ($produits as $produit)
-        <div class="group my-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md product-card">
-            <a class="relative mx-3 mt-3 flex h-80 overflow-hidden rounded-xl shadow-md transition duration-300 transform hover:scale-105"
-                href="#">
-                <img class="peer absolute top-0 right-0 h-full w-full object-cover"
-                    src="{{ asset('storage/' . $produit->photo) }}" alt="{{ $produit->nom }}" />
-                <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-4">
-                    <p class="text-sm">{{ $produit->description }}</p>
+        <!-- Section Produits -->
+        <div id="produits" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+            <!-- Product Cards -->
+            @foreach ($produits as $produit)
+                <div
+                    class="group my-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md product-card">
+                    <a class="relative mx-3 mt-3 flex h-80 overflow-hidden rounded-xl shadow-md transition duration-300 transform hover:scale-105"
+                        href="#">
+                        <img class="peer absolute top-0 right-0 h-full w-full object-cover"
+                            src="{{ asset('storage/' . $produit->photo) }}" alt="{{ $produit->nom }}" />
+                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-4">
+                            <p class="text-sm">{{ $produit->description }}</p>
+                        </div>
+                    </a>
+                    <div class="mt-4 px-5 pb-5">
+                        <a href="#">
+                            <h5 class="text-lg font-bold tracking-tight text-gray-900">{{ $produit->nom }}</h5>
+                        </a>
+                        <div class="mt-2 mb-5 flex items-center justify-between">
+                            <p>
+                                <span
+                                    class="text-2xl font-bold text-gray-900">{{ number_format($produit->prix, 2, ',', ' ') }}
+                                    €</span>
+                            </p>
+                            <button type="button"
+                                class="flex items-center justify-center rounded-md bg-gradient-to-r from-blue-500 to-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-6 w-6" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </a>
-            <div class="mt-4 px-5 pb-5">
-                <a href="#">
-                    <h5 class="text-lg font-bold tracking-tight text-gray-900">{{ $produit->nom }}</h5>
-                </a>
-                <div class="mt-2 mb-5 flex items-center justify-between">
-                    <p>
-                        <span class="text-2xl font-bold text-gray-900">{{ number_format($produit->prix, 2, ',', ' ') }} €</span>
-                    </p>
-                    <button type="button"
-                        class="flex items-center justify-center rounded-md bg-gradient-to-r from-blue-500 to-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-6 w-6" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        Ajouter au panier
-                    </button>
-                </div>
-            </div>
+            @endforeach
         </div>
-    @endforeach
-</div>
 
 
 
@@ -257,13 +269,16 @@
         </div>
         </div>
     </main>
-        <!-- Newsletter Section -->
+    <!-- Newsletter Section -->
     <section class="bg-gradient-to-r from-blue-500 to-purple-600 py-16 px-8 md:px-16">
         <div class="container mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-8">Inscrivez-vous à notre Newsletter</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-8">Inscrivez-vous à notre Newsletter
+            </h2>
             <form action="#" method="POST" class="flex justify-center items-center space-x-4">
-                <input type="email" name="email" id="email" placeholder="Entrez votre adresse e-mail" class="bg-white border-2 border-blue-500 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-600 w-64 md:w-96">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">S'inscrire</button>
+                <input type="email" name="email" id="email" placeholder="Entrez votre adresse e-mail"
+                    class="bg-white border-2 border-blue-500 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-600 w-64 md:w-96">
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">S'inscrire</button>
             </form>
         </div>
     </section>
@@ -275,36 +290,36 @@
         </div>
     </footer>
 
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-    $(document).ready(function() {
-        AOS.init();
-    });
-
-    const button = document.querySelector('button');
-    const menu = document.querySelector('.md\\:hidden ul');
-
-    button.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
-    });
-
-    const addToCartButtons = document.querySelectorAll('.grid #produits button');
-    const cartItems = document.querySelector('.cart-items');
-
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            cartItems.textContent = parseInt(cartItems.textContent) + 1;
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        $(document).ready(function() {
+            AOS.init();
         });
-    });
-</script>
-<script>
-    function toggleAnswer(id) {
-        const answer = document.getElementById(id);
-        answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-    }
-</script>
+
+        const button = document.querySelector('button');
+        const menu = document.querySelector('.md\\:hidden ul');
+
+        button.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        const addToCartButtons = document.querySelectorAll('.grid #produits button');
+        const cartItems = document.querySelector('.cart-items');
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                cartItems.textContent = parseInt(cartItems.textContent) + 1;
+            });
+        });
+    </script>
+    <script>
+        function toggleAnswer(id) {
+            const answer = document.getElementById(id);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
 
 </body>
 
