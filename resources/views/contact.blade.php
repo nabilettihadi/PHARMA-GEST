@@ -31,8 +31,12 @@
                 <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
             </ul>
             <ul class="hidden md:flex space-x-4 items-center">
+                @guest
                 <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800"><i
                             class="fas fa-user-plus mr-1"></i>Inscription</a></li>
+                <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800"><i
+                                class="fas fa-user-plus mr-1"></i>Connexion</a></li>
+                @endguest
                 <li>
                     <a href="#"
                         class="flex items-center justify-center rounded-md bg-blue-500 px-4 py-2 text-white font-semibold hover:bg-blue-600 transition duration-300">
@@ -114,7 +118,7 @@
                             data-original="#000000" />
                     </svg>
                     <a href="javascript:void(0)" class="text-current text-sm ml-3">
-                        <strong>info@example.com</strong>
+                        <strong>info@pharmacare.com</strong>
                     </a>
                 </li>
                 <li class="flex items-center text-blue-500">
@@ -125,7 +129,7 @@
                             data-original="#000000"></path>
                     </svg>
                     <a href="javascript:void(0)" class="text-current text-sm ml-3">
-                        <strong>+158 996 888</strong>
+                        <strong>+212 612 345 678</strong>
                     </a>
                 </li>
             </ul>

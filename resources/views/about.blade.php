@@ -36,9 +36,14 @@
             </ul>
             <!-- Liens à droite (version desktop) -->
             <ul class="hidden md:flex space-x-4 items-center">
+                @guest
                 <!-- Inscription avec icône -->
                 <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800"><i
                             class="fas fa-user-plus mr-1"></i>Inscription</a></li>
+                <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800"><i
+                                class="fas fa-user-plus mr-1"></i>Connexion</a></li>
+
+                @endguest
                 <!-- Panier -->
                 <li>
                     <a href="#"
@@ -52,7 +57,10 @@
         <!-- Menu burger (version mobile) -->
         <ul class="md:hidden bg-white absolute top-0 left-0 right-0 mt-16 rounded-lg shadow-md py-4 px-6 space-y-4 text-center"
             style="display: none;" id="burgerMenu">
+            @guest
             <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
+            <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
+            @endguest
             <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
             <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
             <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
@@ -90,7 +98,7 @@
             </div>
             <div id="equipe-info" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex flex-col items-center hidden">
                 <h3 class="text-xl font-semibold mb-2 text-center">Nos Experts</h3>
-                <img src="https://via.placeholder.com/300" alt="Équipe PharmaCare" class="mb-4 rounded-lg shadow-md">
+                <img src="{{ asset('storage/photos/equipe.jpeg') }}" alt="Équipe PharmaCare" class="mb-4 rounded-lg shadow-md">
                 <p class="text-gray-600 text-center">Notre équipe est composée de professionnels expérimentés dans le domaine de la santé.</p>
             </div>
             
@@ -102,7 +110,7 @@
             </div>
             <div id="mission-info" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex flex-col items-center hidden">
                 <h3 class="text-xl font-semibold mb-2 text-center">Nos Produits</h3>
-                <img src="https://via.placeholder.com/300" alt="Produits PharmaCare" class="mb-4 rounded-lg shadow-md">
+                <img src="{{ asset('storage/photos/produits.jpg') }}"  alt="Produits PharmaCare" class="mb-4 rounded-lg shadow-md">
                 <p class="text-gray-600 text-center">Nos produits sont conçus pour répondre aux besoins de nos clients en matière de santé.</p>
             </div>
             
@@ -114,7 +122,7 @@
             </div>
             <div id="valeurs-info" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex flex-col items-center hidden">
                 <h3 class="text-xl font-semibold mb-2 text-center">Nos Engagements</h3>
-                <img src="https://via.placeholder.com/300" alt="Engagement PharmaCare" class="mb-4 rounded-lg shadow-md">
+                <img src="{{ asset('storage/photos/engagement.jpg') }}" alt="Engagement PharmaCare" class="mb-4 rounded-lg shadow-md">
                 <p class="text-gray-600 text-center">Nous nous engageons à offrir des solutions novatrices pour la santé et le bien-être de nos clients.</p>
             </div>
             
@@ -126,7 +134,7 @@
             </div>
             <div id="expertise-info" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex flex-col items-center hidden">
                 <h3 class="text-xl font-semibold mb-2 text-center">Notre Expertise</h3>
-                <img src="https://via.placeholder.com/300" alt="Expertise PharmaCare" class="mb-4 rounded-lg shadow-md">
+                <img src="{{ asset('storage/photos/expertise.jpg')}}" alt="Expertise PharmaCare" class="mb-4 rounded-lg shadow-md">
                 <p class="text-gray-600 text-center">Nous mettons à profit notre expérience pour offrir des solutions de santé innovantes.</p>
             </div>
         </div>
