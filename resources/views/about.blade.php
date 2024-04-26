@@ -30,12 +30,23 @@
             </div>
             <!-- Menu centré (version desktop) -->
             <ul class="hidden md:flex space-x-4 items-center">
+                @auth
+                @if (auth()->user()->role === 'utilisateur')
+                    <li><a href="{{ route('utilisateur.dashboard') }}"
+                            class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
+                @elseif(auth()->user()->role === 'pharmacien')
+                    <li><a href="{{ route('pharmacien.dashboard') }}"
+                            class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
+                @endif
+                @endAuth
+
                 <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
                 <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
                 <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
             </ul>
             <!-- Liens à droite (version desktop) -->
             <ul class="hidden md:flex space-x-4 items-center">
+
                 @guest
                 <!-- Inscription avec icône -->
                 <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800"><i
@@ -44,6 +55,7 @@
                                 class="fas fa-user-plus mr-1"></i>Connexion</a></li>
 
                 @endguest
+                
                 <!-- Panier -->
                 <li>
                     <a href="#"

@@ -26,15 +26,10 @@
         <!-- Liens du sidebar -->
         <nav class="flex-1 py-4">
             <ul class="space-y-2">
-                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
+                <li><a href="{{ route('utilisateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
                 <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tasks mr-2"></i>Mes commandes</a></li>
                 <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
-                <li>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-sign-out-alt mr-2"></i>Déconnexion</button>
-                    </form>
-                </li>
+                <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
             </ul>
         </nav>
         <!-- Pied de page du sidebar -->

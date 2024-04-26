@@ -26,17 +26,26 @@
                 </a>
             </div>
             <ul class="hidden md:flex space-x-4 items-center">
+                @auth
+                    @if (auth()->user()->role === 'utilisateur')
+                        <li><a href="{{ route('utilisateur.dashboard') }}"
+                                class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
+                    @elseif(auth()->user()->role === 'pharmacien')
+                        <li><a href="{{ route('pharmacien.dashboard') }}"
+                                class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
+                    @endif
+                @endAuth
                 <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
                 <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
                 <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
             </ul>
             <ul class="hidden md:flex space-x-4 items-center">
                 @guest
-                <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800"><i
-                            class="fas fa-user-plus mr-1"></i>Inscription</a></li>
-                
-                <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800"><i
-                            class="fas fa-user-plus mr-1"></i>Connexion</a></li>
+                    <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800"><i
+                                class="fas fa-user-plus mr-1"></i>Inscription</a></li>
+
+                    <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800"><i
+                                class="fas fa-user-plus mr-1"></i>Connexion</a></li>
                 @endguest
                 <li>
                     <a href="#"
@@ -50,8 +59,8 @@
         <ul class="md:hidden bg-white absolute top-0 left-0 right-0 mt-16 rounded-lg shadow-md py-4 px-6 space-y-4 text-center"
             style="display: none;" id="burgerMenu">
             @guest
-            <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
-            <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
+                <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
+                <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
             @endguest
             <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
             <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
@@ -171,7 +180,7 @@
             </div>
         </div>
         <!-- Section Produits -->
-        <div id="produits" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+        <div id="produits" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
             <!-- Product Cards -->
             @foreach ($produits as $produit)
                 <div
@@ -208,9 +217,6 @@
                 </div>
             @endforeach
         </div>
-
-
-
 
         <!-- Section Conseils Santé -->
         <div id="conseils-sante"

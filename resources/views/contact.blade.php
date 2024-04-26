@@ -26,6 +26,9 @@
                 </a>
             </div>
             <ul class="hidden md:flex space-x-4 items-center">
+                @Auth
+                <li><a href="{{ route('pharmacien.dashboard') }}" class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
+                @endAuth
                 <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
                 <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
                 <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
@@ -48,7 +51,19 @@
         </div>
         <ul class="md:hidden bg-white absolute top-0 left-0 right-0 mt-16 rounded-lg shadow-md py-4 px-6 space-y-4 text-center"
             style="display: none;" id="burgerMenu">
+            @auth
+            @if (auth()->user()->role === 'utilisateur')
+                <li><a href="{{ route('utilisateur.dashboard') }}"
+                        class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
+            @elseif(auth()->user()->role === 'pharmacien')
+                <li><a href="{{ route('pharmacien.dashboard') }}"
+                        class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
+            @endif
+        @endAuth
+            @guest
             <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
+            <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
+            @endguest
             <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
             <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
             <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>

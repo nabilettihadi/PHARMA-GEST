@@ -26,7 +26,7 @@
         <!-- Liens du sidebar -->
         <nav class="flex-1 py-4">
             <ul class="space-y-2">
-                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
+                <li><a href="{{ route('pharmacien.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
                 <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tasks mr-2"></i>Gestion des commandes</a></li>
                 <li><a href="{{ route('produits.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-cube mr-2"></i>Gestion des produits</a></li>
                 <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-chart-line mr-2"></i>Statistiques</a></li>

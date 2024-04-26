@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 flex flex-col min-h-screen">
 
     <!-- Barre de navigation -->
     <nav class="navbar py-4 bg-white shadow-lg">
@@ -26,6 +26,9 @@
                 </a>
             </div>
             <ul class="hidden md:flex space-x-4 items-center">
+                @Auth
+                <li><a href="{{ route('pharmacien.dashboard') }}" class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
+                @endAuth
                 <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
                 <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
                 <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
@@ -81,27 +84,34 @@
 
 
     <!-- Liste des produits -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 product-list">
-        <!-- Récupération des produits depuis la base de données -->
-        @foreach ($produits as $produit)
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <a href="#!">
-                    <img class="w-full h-48 object-cover object-center" src="{{ asset('storage/' . $produit->photo) }}"
-                        alt="{{ $produit->nom }}">
-                </a>
-                <div class="p-6">
-                    <h5 class="text-xl font-medium leading-tight mb-2">{{ $produit->nom }}</h5>
-                    <p class="text-base mb-4">{{ $produit->description }}</p>
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-lg">${{ $produit->prix }}</span>
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Ajouter au
-                            panier</button>
-                    </div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 product-list flex-grow mb-16">
+    <!-- Récupération des produits depuis la base de données -->
+    @foreach ($produits as $produit)
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <a href="#!">
+                <img class="w-full h-64 object-cover object-center" src="{{ asset('storage/' . $produit->photo) }}"
+                    alt="{{ $produit->nom }}">
+            </a>
+            <div class="p-6">
+                <h5 class="text-lg font-semibold leading-tight mb-2">{{ $produit->nom }}</h5>
+                <p class="text-sm text-gray-600 mb-4">{{ $produit->description }}</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-lg font-bold text-gray-900">${{ $produit->prix }}</span>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Ajouter au
+                        panier</button>
                 </div>
             </div>
-        @endforeach
-    </div>
-    </div>
+        </div>
+    @endforeach
+</div>
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; {{ date('Y') }} PharmaCare. Tous droits réservés.</p>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script>
@@ -124,3 +134,5 @@
 </body>
 
 </html>
+
+
