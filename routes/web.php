@@ -43,6 +43,7 @@ return view('about');
 
 
 Route::group(['middleware' => 'pharmacien'], function () {
+    Route::get('/produits/page', [ProduitController::class, 'Page'])->name('produits.page');
     Route::get('/pharmacien/dashboard', [PharmacienController::class, 'index'])->name('pharmacien.dashboard');
     Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
     Route::get('/produits/create', [ProduitController::class, 'create'])->name('produits.create');
@@ -62,6 +63,7 @@ Route::group(['middleware' => 'pharmacien'], function () {
 
 Route::group(['middleware' => 'utilisateur'], function () {
     // Routes accessibles aux utilisateurs
+    Route::get('/produits/page', [ProduitController::class, 'Page'])->name('produits.page');
     Route::get('/utilisateur/dashboard', [UtilisateurController::class, 'index'])->name('utilisateur.dashboard');
     Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
     Route::get('/commandes/create', [CommandeController::class, 'create'])->name('commandes.create');

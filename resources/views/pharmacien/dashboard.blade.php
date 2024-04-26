@@ -4,66 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord pharmacien</title>
-    <!-- Lien vers Tailwind CSS via CDN -->
+    <title>PharmaCare - Tableau de bord</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Lien vers Font Awesome pour les icônes -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 font-sans antialiased">
+<body class="bg-gray-100">
 
-    <!-- Barre de navigation -->
-    <nav class="bg-white shadow-md">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="/" class="text-2xl font-semibold text-gray-800">Pharma<span
+    <!-- Sidebar -->
+    <aside class="bg-gray-800 text-white h-screen w-64 fixed top-0 left-0 flex flex-col justify-between">
+        <!-- Logo et nom de l'utilisateur -->
+        <div class="p-4 border-b border-gray-700">
+            <a href="/" class="text-2xl font-semibold text-gray-200">Pharma<span
                     class="text-blue-500">Care</span></a>
-            {{-- <ul class="flex space-x-4">
-                <li><a href="#" class="text-gray-600 hover:text-gray-800">Accueil</a></li>
-                <li><a href="#" class="text-gray-600 hover:text-gray-800">À propos</a></li>
-                <li><a href="#" class="text-gray-600 hover:text-gray-800">Produits</a></li>
-                <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
-                <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
-            </ul> --}}
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-gray-600 hover:text-gray-800">Déconnexion</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-            
+            <div class="mt-4">
+                <p class="text-sm text-gray-400">Connecté en tant que:</p>
+                <p class="text-lg font-semibold">{{ Auth::user()->name }}</p>
+            </div>
         </div>
-    </nav>
+        <!-- Liens du sidebar -->
+        <nav class="flex-1 py-4">
+            <ul class="space-y-2">
+                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
+                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tasks mr-2"></i>Gestion des commandes</a></li>
+                <li><a href="{{ route('produits.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-cube mr-2"></i>Gestion des produits</a></li>
+                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
+                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-cogs mr-2"></i>Paramètres</a></li>
+                <li><a href="/logout" class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
+            </ul>
+        </nav>
+        <!-- Pied de page du sidebar -->
+        <footer class="p-4 border-t border-gray-700">
+            <p class="text-sm text-gray-400">&copy; {{ date('Y') }} PharmaCare. Tous droits réservés.</p>
+        </footer>
+    </aside>
 
     <!-- Contenu principal -->
-    <main class="container mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Section Gérer les Produits -->
-            <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                <h2 class="text-2xl font-semibold mb-4">Gérer les Produits</h2>
-                <p class="text-lg mb-4">Accédez à la liste des produits de votre pharmacie et gérez-les facilement.</p>
-                <a href="{{ route('produits.index') }}"
-                    class="bg-white text-blue-500 font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 hover:text-white transition duration-300 inline-block">Voir
-                    les Produits</a>
-            </div>
-            <!-- Section Statistiques -->
-            <div class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                <h2 class="text-2xl font-semibold mb-4">Statistiques</h2>
-                <p class="text-lg mb-4">Consultez les statistiques de vente, les stocks, etc.</p>
-                <a href="{{ route('statistiques.index') }}" class="bg-white text-purple-500 font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-purple-600 hover:text-white transition duration-300 inline-block">Voir
-                    les Statistiques</a>
-            </div>
-        </div>
-    </main>
+    <main class="ml-64 p-8">
+        <!-- Barre de navigation -->
 
-    <!-- Pied de page -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; {{ date('Y') }} PharmaCare. Tous droits réservés.</p>
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Burger Menu -->
+            <div class="md:hidden flex items-center">
+                <button class="text-gray-600 focus:outline-none mr-4" id="burgerBtn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+
         </div>
-    </footer>
+
+
+        <!-- Scripts pour gérer le menu burger -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const burgerBtn = document.getElementById('burgerBtn');
+
+                burgerBtn.addEventListener('click', () => {
+                    const sidebar = document.querySelector('aside');
+                    sidebar.classList.toggle('hidden');
+                });
+            });
+        </script>
+
+    </main>
 
 </body>
 
 </html>
-
-
 
