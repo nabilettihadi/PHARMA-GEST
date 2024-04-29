@@ -20,6 +20,12 @@ class UtilisateurController extends Controller
         return view('utilisateur.dashboard', compact('commandes', 'produits'));
     }
 
+    public function mesCommandes()
+    {
+        $commandes = Commande::where('user_id', auth()->id())->get();
+        return view('utilisateur.mescommandes', compact('commandes'));
+    }
+
     public function about(){
 
         return view('about');

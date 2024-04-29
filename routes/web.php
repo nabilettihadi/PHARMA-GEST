@@ -72,7 +72,9 @@ Route::group(['middleware' => 'utilisateur'], function () {
     // Routes accessibles aux utilisateurs
     Route::get('/produits/page', [ProduitController::class, 'Page'])->name('produits.page');
     Route::get('/utilisateur/dashboard', [UtilisateurController::class, 'index'])->name('utilisateur.dashboard');
-    Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
+
+
+    Route::get('/utilisateur/mescommandes', [UtilisateurController::class, 'mesCommandes'])->name('utilisateur.mescommandes');
     Route::get('/commandes/create', [CommandeController::class, 'create'])->name('commandes.create');
     Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
     Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
@@ -91,3 +93,4 @@ Route::get('/contact', [ContactController::class, 'show'])->name('contact.show')
 // Route pour traiter le formulaire de contact
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
+Route::get('/search', [ProduitController::class, 'search'])->name('produits.search');

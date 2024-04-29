@@ -11,21 +11,16 @@
 </head>
 
 <body class="bg-gray-100">
-
     <!-- Barre de navigation -->
     <nav class="navbar py-4 bg-white shadow-lg">
         <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
             <a href="/" class="text-2xl font-semibold text-gray-800">Pharma<span
                     class="text-blue-500">Care</span></a>
-            <div class="md:hidden flex items-center">
-                <button class="text-gray-600 focus:outline-none mr-4" id="burgerBtn">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-                <a href="#" class="text-gray-600 hover:text-gray-800">
-                    <i class="fas fa-shopping-cart text-2xl"></i>
-                </a>
-            </div>
+
+
             <ul class="hidden md:flex space-x-4 items-center">
+                <!-- Authentification -->
                 @auth
                     @if (auth()->user()->role === 'utilisateur')
                         <li><a href="{{ route('utilisateur.dashboard') }}"
@@ -38,29 +33,41 @@
                 <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
                 <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
                 <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
-            </ul>
-            <ul class="hidden md:flex space-x-4 items-center">
+                <!-- Authentification pour le panier -->
                 @guest
                     <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800"><i
                                 class="fas fa-user-plus mr-1"></i>Inscription</a></li>
-
                     <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800"><i
                                 class="fas fa-user-plus mr-1"></i>Connexion</a></li>
                 @endguest
+            </ul>
+            <!-- Menu de navigation -->
+            <div class="md:hidden flex items-center">
+                <button class="text-gray-600 focus:outline-none mr-4" id="burgerBtn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            <!-- Panier -->
+            <ul class="md:flex space-x-4 items-center">
                 <li>
-                    <a href="#"
+                    <a href="#" id="cartNavbarBtn"
                         class="flex items-center justify-center rounded-md bg-blue-500 px-4 py-2 text-white font-semibold hover:bg-blue-600 transition duration-300">
                         <i class="fas fa-shopping-cart mr-2"></i>
                         @auth
-                            <span class="cart-items">{{ auth()->user()->commandes()->count() }}</span>
+                            <span
+                                class="cart-items">{{ auth()->user()->commandes()->where('etat', 'En attente')->count() }}</span>
                         @endauth
                     </a>
                 </li>
+
             </ul>
         </div>
+
+        <!-- Menu burger pour les écrans mobiles -->
         <ul class="md:hidden bg-white absolute top-0 left-0 right-0 mt-16 rounded-lg shadow-md py-4 px-6 space-y-4 text-center"
             style="display: none;" id="burgerMenu">
             @guest
+                <!-- Authentification pour mobile -->
                 <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
                 <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
             @endguest
@@ -68,19 +75,41 @@
             <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
             <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
         </ul>
+
+        <!-- Dropdown des commandes -->
+        <div class="relative">
+            <ul class="absolute right-0 w-80 bg-white border border-gray-200 shadow-md rounded-lg mt-2 py-4 hidden"
+                id="cartDropdown">
+                <!-- Liste des commandes de l'utilisateur -->
+                @auth
+                    @foreach (auth()->user()->commandes()->where('etat', 'En attente')->get() as $commande)
+                        <li class="flex items-center justify-between mb-4 border-b pb-3">
+                            <!-- Image de la commande -->
+                            <div class="flex items-center">
+                                <img src="{{ asset('storage/' . $commande->produit->photo) }}"
+                                    alt="{{ $commande->produit->nom }}" class="w-16 h-16 object-cover rounded-full mr-4">
+                                <!-- Détails de la commande -->
+                                <div>
+                                    <p class="font-semibold">{{ $commande->produit->nom }}</p>
+                                    <p class="text-sm text-gray-600">Quantité: {{ $commande->quantite }}</p>
+                                </div>
+                            </div>
+                            <!-- Total et état de la commande -->
+                            <div class="flex flex-col justify-between">
+                                <div class="text-gray-600">
+                                    <span>Total: ${{ $commande->total }}</span>
+                                </div>
+                                <div>
+                                    <span class="text-green-600 font-semibold">État: {{ $commande->etat }}</span>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                @endauth
+            </ul>
+        </div>
     </nav>
-
-    <!-- Scripts pour gérer le menu burger -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const burgerBtn = document.getElementById('burgerBtn');
-            const burgerMenu = document.getElementById('burgerMenu');
-
-            burgerBtn.addEventListener('click', () => {
-                burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
-            });
-        });
-    </script>
+    
 
 
     <!-- En-tête avec image de fond et texte -->
@@ -288,18 +317,7 @@
         </div>
     </main>
     <!-- Newsletter Section -->
-    <section class="bg-gradient-to-r from-blue-500 to-purple-600 py-16 px-8 md:px-16">
-        <div class="container mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-8">Inscrivez-vous à notre Newsletter
-            </h2>
-            <form action="#" method="POST" class="flex justify-center items-center space-x-4">
-                <input type="email" name="email" id="email" placeholder="Entrez votre adresse e-mail"
-                    class="bg-white border-2 border-blue-500 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-600 w-64 md:w-96">
-                <button type="submit"
-                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">S'inscrire</button>
-            </form>
-        </div>
-    </section>
+
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-8">
@@ -338,6 +356,28 @@
             answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
         }
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartNavbarBtn = document.getElementById('cartNavbarBtn');
+        const cartDropdown = document.getElementById('cartDropdown');
+        const cartDropdownMobile = document.getElementById('cartDropdownMobile');
+        const burgerBtn = document.getElementById('burgerBtn');
+        const burgerMenu = document.getElementById('burgerMenu');
+
+        cartNavbarBtn.addEventListener('click', () => {
+            cartDropdown.classList.toggle('hidden');
+            cartDropdownMobile.classList.add('hidden');
+        });
+
+        burgerBtn.addEventListener('click', () => {
+            burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
+            cartDropdownMobile.classList.add('hidden');
+        });
+    });
+
+
+</script>
 
 </body>
 

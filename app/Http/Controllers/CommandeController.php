@@ -15,6 +15,11 @@ class CommandeController extends Controller
         $commandes = Commande::all();
         return view('commandes.index', compact('commandes'));
     }
+    public function mesCommandes()
+    {
+        $commandes = Commande::where('user_id', auth()->id())->get();
+        return view('utilisateur.mescommandes', compact('commandes'));
+    }
 
     public function ajouterAuPanier($produitId)
     {

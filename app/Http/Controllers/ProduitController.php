@@ -19,13 +19,14 @@ class ProduitController extends Controller
         return view('welcome', compact('produits'));
     }
     public function Page()
-    {
-        // Récupérez tous les produits depuis la base de données
-        $produits = Produit::all();
+{
+    // Récupérez tous les produits depuis la base de données avec pagination
+    $produits = Produit::paginate(10); // Vous pouvez ajuster le nombre de produits par page
 
-        // Retournez la vue 'produits.page' en passant les produits récupérés comme données
-        return view('produits.page', compact('produits'));
-    }
+    // Retournez la vue 'produits.page' en passant les produits récupérés comme données
+    return view('produits.page', compact('produits'));
+}
+
 
     public function create()
     {
@@ -109,4 +110,21 @@ class ProduitController extends Controller
 
         return view('statistiques.index', compact('statistiquesQuantite', 'statistiquesMontant'));
     }
+    
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+
+    // Logique de recherche ici (par exemple, recherchez dans la base de données)
+
+    // Exemple de recherche factice
+    $produits = Produit::where('nom', 'like', '%' . $query . '%')->get();
+
+    return response()->json([
+        'produits' => $produits,
+    ]);
+}
+
+
+
 }
