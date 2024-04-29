@@ -20,6 +20,10 @@ use App\Http\Controllers\ContactController;
 |
 */
 
+
+
+Route::post('/ajouter-au-panier/{produitId}', [CommandeController::class, 'ajouterAuPanier'])->name('ajouter-au-panier');
+
 // Route pour afficher le formulaire d'inscription
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
@@ -56,6 +60,9 @@ Route::group(['middleware' => 'pharmacien'], function () {
 
 
 });
+
+
+
 
 
 

@@ -10,14 +10,12 @@ class CreateCommandesTable extends Migration
     {
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('client_id');
-            $table->date('date');
-            $table->string('produits');
-            $table->float('total');
-            $table->string('etat')->default('En cours');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('produits')->constrained('produits')->onDelete('cascade');
+            $table->unsignedInteger('quantite')->default(1);
+            $table->decimal('total', 10, 2);
+            $table->string('etat')->default('En attente');
             $table->timestamps();
-
-            $table->foreign('client_id')->references('id')->on('clients');
         });
     }
 

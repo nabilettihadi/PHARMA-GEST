@@ -41,14 +41,18 @@
                                 class="fas fa-user-plus mr-1"></i>Connexion</a></li>
                 @endguest
                 <li>
-                    <a href="#"
+                    <a href="#" id="cart-dropdown-btn"
                         class="flex items-center justify-center rounded-md bg-blue-500 px-4 py-2 text-white font-semibold hover:bg-blue-600 transition duration-300">
                         <i class="fas fa-shopping-cart mr-2"></i>
-                        <span class="cart-items">3</span>
+                        @auth
+                        <span class="cart-items">{{ auth()->user()->commandes()->where('etat', 'En attente')->count() }}</span>
+                        @endauth
                     </a>
                 </li>
             </ul>
         </div>
+
+        
         <ul class="md:hidden bg-white absolute top-0 left-0 right-0 mt-16 rounded-lg shadow-md py-4 px-6 space-y-4 text-center"
             style="display: none;" id="burgerMenu">
             @guest
@@ -85,24 +89,36 @@
 
     <!-- Liste des produits -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 product-list flex-grow mb-16">
-    <!-- Récupération des produits depuis la base de données -->
     @foreach ($produits as $produit)
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <a href="#!">
-                <img class="w-full h-64 object-cover object-center" src="{{ asset('storage/' . $produit->photo) }}"
-                    alt="{{ $produit->nom }}">
-            </a>
-            <div class="p-6">
-                <h5 class="text-lg font-semibold leading-tight mb-2">{{ $produit->nom }}</h5>
-                <p class="text-sm text-gray-600 mb-4">{{ $produit->description }}</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-lg font-bold text-gray-900">${{ $produit->prix }}</span>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Ajouter au
-                        panier</button>
-                </div>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <a href="#!" class="block">
+            <img class="w-full h-64 object-cover object-center" src="{{ asset('storage/' . $produit->photo) }}"
+                alt="{{ $produit->nom }}">
+        </a>
+        <div class="p-6">
+            <h5 class="text-lg font-semibold leading-tight mb-2">{{ $produit->nom }}</h5>
+            <p class="text-sm text-gray-600 mb-4">{{ $produit->description }}</p>
+            <div class="flex items-center justify-between">
+                <span class="text-lg font-bold text-gray-900">${{ $produit->prix }}</span>
+                @auth
+                @if(auth()->user()->role === 'utilisateur')
+                    <form action="{{ route('ajouter-au-panier', $produit->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="bg-gradient-to-r from-blue-500 to-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white rounded-md hover:from-blue-700 hover:to-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </button>
+                    </form>
+                @endif
+                @endauth
             </div>
         </div>
+    </div>
     @endforeach
+</div>
+
+
 </div>
 
 

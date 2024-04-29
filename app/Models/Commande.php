@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Produit;
 
 class Commande extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'client_id',
-        'date',
+        'user_id',
         'produits',
+        'quantite',
         'total',
         'etat',
     ];
@@ -20,5 +22,10 @@ class Commande extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function produit()
+    {
+        return $this->belongsTo(Produit::class, 'produits');
     }
 }
