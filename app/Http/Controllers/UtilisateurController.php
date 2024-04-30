@@ -35,18 +35,20 @@ class UtilisateurController extends Controller
     }
 
     public function rechercherCommandes(Request $request)
-{
-    $search = $request->input('search');
+    {
+        $search = $request->input('search');
 
-    // Recherche des commandes par produits
-    $commandes = Commande::whereHas('produits', function ($query) use ($search) {
-        $query->where('nom', 'like', "%{$search}%");
-    })->get();
+        // Recherche les commandes par nom ou description des produits associés
+        $commandes = Commande::whereHas('produits', function ($query) use ($search) {
+            $query->where('nom', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%");
+        })
+        ->where('user_id', auth()->id()) // Ajoutez cette condition pour filtrer par l'utilisateur authentifié
+        ->orderBy('created_at', 'desc')
+        ->with('produits') // Chargez les produits associés aux commandes
+        ->get();
 
-    // Rendre la vue des résultats de la recherche et la renvoyer sous forme de réponse JSON
-    $view = view('utilisateur.mescommandes', compact('commandes'))->render();
-
-    return response()->json(['html' => $view]);
-}
+        return response()->json(['commandes' => $commandes]);
+    }
 
 }

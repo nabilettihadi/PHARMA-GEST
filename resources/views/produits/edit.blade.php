@@ -108,7 +108,7 @@
         });
     </script>
     <!-- Contenu principal -->
-    <main class="container mx-auto px-4 py-12">
+    <main class="container mx-auto pt-24 md:pt-0 px-4 py-12">
         <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-3xl font-bold text-center mb-8">Modifier le Produit</h1>
             <form action="{{ route('produits.update', $produit->id) }}" method="POST" enctype="multipart/form-data">

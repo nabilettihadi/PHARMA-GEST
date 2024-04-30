@@ -107,7 +107,7 @@
     </script>
 
     <!-- Contenu principal -->
-    <div class="container mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="container mx-auto md:pl-64 pl-0 px-4 py-12 grid grid-cols-1 pt-24 md:pt-6 md:grid-cols-2 gap-8">
         <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-3xl font-bold text-center mb-8">Détails du Produit</h1>
             <div class="flex justify-center mb-6">

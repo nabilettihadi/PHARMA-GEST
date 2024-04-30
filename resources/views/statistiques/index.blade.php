@@ -121,8 +121,8 @@
     </script>
 
     <!-- Contenu principal -->
-    <main class="container mx-auto px-4 py-12">
-        <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    <main class="container mx-auto px-4 py-12 pt-24 md:pt-0">
+        <div class="max-w-3xl mx-auto bg-white mt-4 p-8 rounded-lg shadow-md">
             <div class="chart-container">
                 <div id="quantiteVendueContainer">
                     <h2 class="text-xl font-semibold mb-4">Statistiques par quantité vendue</h2>

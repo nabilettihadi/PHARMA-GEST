@@ -113,7 +113,7 @@
 
 
 
-        <main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out">
+        <main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out pt-24 md:pt-0">
             <h3 class="text-xl font-semibold mb-2 md:mb-0 text-center">Vos commandes</h3>
             <div class="flex items-center justify-end mt-4 space-x-4">
                 <input type="text" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none" placeholder="Rechercher...">

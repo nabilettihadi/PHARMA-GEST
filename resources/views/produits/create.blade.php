@@ -111,8 +111,8 @@
 
 
     <!-- Contenu principal -->
-    <main class="container mx-auto px-4 py-12">
-        <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+    <main class="container pt-24 pl-0 md:pl-64 md:pt-6 px-4 py-12">
+        <div class="max-w-md m-auto bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-3xl font-bold text-center mb-8">Ajouter un Produit</h1>
             <form action="{{ route('produits.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
