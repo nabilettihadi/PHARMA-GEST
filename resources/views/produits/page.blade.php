@@ -85,11 +85,11 @@
                         <li class="flex items-center justify-between mb-4 border-b pb-3">
                             <!-- Image de la commande -->
                             <div class="flex items-center">
-                                <img src="{{ asset('storage/' . $commande->produit->photo) }}"
-                                    alt="{{ $commande->produit->nom }}" class="w-16 h-16 object-cover rounded-full mr-4">
+                                <img src="{{ asset('storage/' . $commande->produits->photo) }}"
+                                    alt="{{ $commande->produits->nom }}" class="w-16 h-16 object-cover rounded-full mr-4">
                                 <!-- Détails de la commande -->
                                 <div>
-                                    <p class="font-semibold">{{ $commande->produit->nom }}</p>
+                                    <p class="font-semibold">{{ $commande->produits->nom }}</p>
                                     <p class="text-sm text-gray-600">Quantité: {{ $commande->quantite }}</p>
                                 </div>
                             </div>

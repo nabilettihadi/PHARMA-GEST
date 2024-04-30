@@ -111,54 +111,6 @@
 
     <body class="bg-gray-100">
 
-
-
-        <main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out">
-            <h3 class="text-xl font-semibold mb-2 md:mb-0 text-center">Vos commandes</h3>
-            <div class="flex items-center justify-end mt-4 space-x-4">
-                <input type="text" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none" placeholder="Rechercher...">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none flex items-center">
-                    <i class="fas fa-search mr-2"></i>Rechercher
-                </button>
-            </div>
-            <div class="container mx-auto px-4 py-8">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    @forelse ($commandes as $commande)
-                        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                            <div class="bg-gray-100 px-4 py-2">
-                                <div class="flex justify-between items-center">
-                                    <div class="text-lg font-semibold">Commande {{ $commande->id }}</div>
-                                    <div class="text-sm text-gray-600"> {{ $commande->created_at->format('d/m/Y') }}</div>
-                                </div>
-                                <div class="text-sm text-gray-600">Montant: {{ $commande->total }}</div>
-                                <div class="mt-2">
-                                    <span class="text-sm font-semibold">État:</span>
-                                    <span class=" text-black py-1 px-2 rounded-full">{{ $commande->etat }}</span>
-                                </div>
-                            </div>
-                            <div class="px-4 py-2">
-                                <h4 class="text-lg font-semibold mb-2">Produits:</h4>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                                        <div class="bg-gray-100 shadow-md rounded-lg p-4">
-                                            <a href="#!" class="block">
-                                                <img class="w-full h-48 object-cover object-center" src="{{ asset('storage/' . $commande->produits->photo) }}" alt="{{ $commande->produits->nom }}">
-                                            </a>
-                                            <div class="p-6">
-                                                <h5 class="text-lg font-semibold leading-tight mb-2">{{ $commande->produits->nom }}</h5>
-                                                <p class="text-sm text-gray-600 mb-4">{{ $commande->produits->description }}</p>
-
-                                            </div>
-                                        </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="text-lg text-center">Vous n'avez aucune commande.</div>
-                    @endforelse
-                </div>
-            </div>
         </main>
         
 

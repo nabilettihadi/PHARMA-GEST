@@ -24,8 +24,29 @@ class UtilisateurController extends Controller
         return view('utilisateur.mescommandes', compact('commandes'));
     }
 
+    public function statistiques()
+    {
+        return view('utilisateur.statistiques');
+    }
+
     public function about(){
 
         return view('about');
     }
+
+    public function rechercherCommandes(Request $request)
+{
+    $search = $request->input('search');
+
+    // Recherche des commandes par produits
+    $commandes = Commande::whereHas('produits', function ($query) use ($search) {
+        $query->where('nom', 'like', "%{$search}%");
+    })->get();
+
+    // Rendre la vue des résultats de la recherche et la renvoyer sous forme de réponse JSON
+    $view = view('utilisateur.mescommandes', compact('commandes'))->render();
+
+    return response()->json(['html' => $view]);
+}
+
 }
