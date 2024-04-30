@@ -36,8 +36,8 @@
                 <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
                 <!-- Authentification pour le panier -->
                 @guest
-                    <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800"><i
-                                class="fas fa-user-plus mr-1"></i>Connexion</a></li>
+                    <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800"><i
+                                class="fas fa-user-plus mr-1"></i>Inscription</a></li>
                 @endguest
             </ul>
             <!-- Menu de navigation -->
@@ -67,7 +67,7 @@
             style="display: none;" id="burgerMenu">
             @guest
                 <!-- Authentification pour mobile -->
-                <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
+                <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
             @endguest
             <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
             <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
@@ -109,34 +109,34 @@
     </nav>
 
     <!-- Formulaire de connexion -->
-<div class="min-h-screen flex justify-center items-center bg-cover bg-center"
-style="background-image: url('https://source.unsplash.com/1600x900/?pharmacy')">
-<div class="w-full max-w-md">
-    <div class="bg-white shadow-md rounded px-8 py-6">
-        <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Connexion</h1>
-        <form method="POST" action="{{ route('login') }}" class="space-y-4">
-            @csrf
-            <div>
-                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Adresse Email</label>
-                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
-                    placeholder="Adresse Email"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <div class="min-h-screen flex justify-center items-center bg-cover bg-center"
+        style="background-image: url('https://source.unsplash.com/1600x900/?pharmacy')">
+        <div class="w-full max-w-md">
+            <div class="bg-white shadow-md rounded px-8 py-6">
+                <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Connexion</h1>
+                <form method="POST" action="{{ route('login') }}" class="space-y-4">
+                    @csrf
+                    <div>
+                        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Adresse Email</label>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}" required
+                            autofocus placeholder="Adresse Email"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Mot de passe</label>
+                        <input id="password" type="password" name="password" required placeholder="Mot de passe"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">Se
+                        connecter</button>
+                </form>
+                <div class="text-center mt-4">
+                    <a href="#" class="text-gray-600 hover:text-blue-600">Mot de passe oublié ?</a>
+                </div>
             </div>
-            <div>
-                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Mot de passe</label>
-                <input id="password" type="password" name="password" required placeholder="Mot de passe"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-            <button type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">Se
-                connecter</button>
-        </form>
-        <div class="text-center mt-4">
-            <a href="#" class="text-gray-600 hover:text-blue-600">Mot de passe oublié ?</a>
         </div>
     </div>
-</div>
-</div>
 
 
     <!-- Pied de page -->
@@ -145,7 +145,7 @@ style="background-image: url('https://source.unsplash.com/1600x900/?pharmacy')">
             <p>&copy; {{ date('Y') }} PharmaCare. Tous droits réservés.</p>
         </div>
     </footer>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const cartNavbarBtn = document.getElementById('cartNavbarBtn');
@@ -153,23 +153,18 @@ style="background-image: url('https://source.unsplash.com/1600x900/?pharmacy')">
             const cartDropdownMobile = document.getElementById('cartDropdownMobile');
             const burgerBtn = document.getElementById('burgerBtn');
             const burgerMenu = document.getElementById('burgerMenu');
-    
+
             cartNavbarBtn.addEventListener('click', () => {
                 cartDropdown.classList.toggle('hidden');
                 cartDropdownMobile.classList.add('hidden');
             });
-    
+
             burgerBtn.addEventListener('click', () => {
                 burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
                 cartDropdownMobile.classList.add('hidden');
             });
         });
-    
-    
     </script>
 </body>
 
 </html>
-
-
-

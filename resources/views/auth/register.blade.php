@@ -122,15 +122,15 @@
                                 <input type="radio" id="role_pharmacien" name="role" value="pharmacien" required
                                     class="mr-2 focus:ring-blue-500 h-4 w-4 border border-gray-300 rounded-full checked:bg-blue-600 checked:border-transparent">
                                 <label for="role_pharmacien" class="text-sm text-gray-800">Pharmacien</label>
-                        
+
                                 <!-- Bouton radio pour Utilisateur -->
                                 <input type="radio" id="role_utilisateur" name="role" value="utilisateur" required
                                     class="ml-6 mr-2 focus:ring-blue-500 h-4 w-4 border border-gray-300 rounded-full checked:bg-blue-600 checked:border-transparent">
                                 <label for="role_utilisateur" class="text-sm text-gray-800">Utilisateur</label>
                             </div>
                         </div>
-                        
-                        
+
+
 
                         <!-- Name Input -->
                         <div class="mb-6">
@@ -143,8 +143,8 @@
                         <!-- Email Input -->
                         <div class="mb-6">
                             <label for="email" class="block text-sm text-gray-600">Adresse Email :</label>
-                            <input id="email" type="email" name="email" value="{{ old('email') }}" required
-                                placeholder="Entrez votre adresse email"
+                            <input id="email" type="email" name="email" value="{{ old('email') }}"
+                                required placeholder="Entrez votre adresse email"
                                 class="input-field appearance-none border border-gray-300 rounded-md py-2 px-4 w-full focus:outline-none focus:border-blue-500">
                         </div>
 
@@ -197,19 +197,17 @@
             const cartDropdownMobile = document.getElementById('cartDropdownMobile');
             const burgerBtn = document.getElementById('burgerBtn');
             const burgerMenu = document.getElementById('burgerMenu');
-    
+
             cartNavbarBtn.addEventListener('click', () => {
                 cartDropdown.classList.toggle('hidden');
                 cartDropdownMobile.classList.add('hidden');
             });
-    
+
             burgerBtn.addEventListener('click', () => {
                 burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
                 cartDropdownMobile.classList.add('hidden');
             });
         });
-    
-    
     </script>
 </body>
 

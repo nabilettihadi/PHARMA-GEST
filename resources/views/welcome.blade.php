@@ -109,7 +109,7 @@
             </ul>
         </div>
     </nav>
-    
+
 
 
     <!-- En-tête avec image de fond et texte -->
@@ -357,27 +357,25 @@
         }
     </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const cartNavbarBtn = document.getElementById('cartNavbarBtn');
-        const cartDropdown = document.getElementById('cartDropdown');
-        const cartDropdownMobile = document.getElementById('cartDropdownMobile');
-        const burgerBtn = document.getElementById('burgerBtn');
-        const burgerMenu = document.getElementById('burgerMenu');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartNavbarBtn = document.getElementById('cartNavbarBtn');
+            const cartDropdown = document.getElementById('cartDropdown');
+            const cartDropdownMobile = document.getElementById('cartDropdownMobile');
+            const burgerBtn = document.getElementById('burgerBtn');
+            const burgerMenu = document.getElementById('burgerMenu');
 
-        cartNavbarBtn.addEventListener('click', () => {
-            cartDropdown.classList.toggle('hidden');
-            cartDropdownMobile.classList.add('hidden');
+            cartNavbarBtn.addEventListener('click', () => {
+                cartDropdown.classList.toggle('hidden');
+                cartDropdownMobile.classList.add('hidden');
+            });
+
+            burgerBtn.addEventListener('click', () => {
+                burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
+                cartDropdownMobile.classList.add('hidden');
+            });
         });
-
-        burgerBtn.addEventListener('click', () => {
-            burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
-            cartDropdownMobile.classList.add('hidden');
-        });
-    });
-
-
-</script>
+    </script>
 
 </body>
 

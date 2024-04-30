@@ -157,9 +157,9 @@
         <div class="pagination">
             {{ $produits->links() }}
         </div>
-        
+
     </div>
-    
+
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-8">
         <div class="container mx-auto px-4 text-center">
@@ -176,40 +176,51 @@
                 $.ajax({
                     url: '{{ route('produits.search') }}',
                     type: 'GET',
-                    data: { query: searchText },
+                    data: {
+                        query: searchText
+                    },
                     success: function(response) {
                         var produits = response.produits;
                         var html = '';
-    
+
                         if (produits.length === 0) {
-                            html = '<p class="text-center">Le produit recherché n\'existe pas.</p>';
+                            html =
+                                '<p class="text-center">Le produit recherché n\'existe pas.</p>';
 
                         } else {
                             produits.forEach(function(produit) {
-                                html += '<div class="bg-white rounded-lg shadow-md overflow-hidden">';
+                                html +=
+                                    '<div class="bg-white rounded-lg shadow-md overflow-hidden">';
                                 html += '<a href="#!" class="block">';
-                                html += '<img class="w-full h-64 object-cover object-center" src="{{ asset('storage/') }}/' + produit.photo + '" alt="' + produit.nom + '">';
+                                html +=
+                                    '<img class="w-full h-64 object-cover object-center" src="{{ asset('storage/') }}/' +
+                                    produit.photo + '" alt="' + produit.nom + '">';
                                 html += '</a>';
                                 html += '<div class="p-6">';
-                                html += '<h5 class="text-lg font-semibold leading-tight mb-2">' + produit.nom + '</h5>';
-                                html += '<p class="text-sm text-gray-600 mb-4">' + produit.description + '</p>';
-                                html += '<div class="flex items-center justify-between">';
-                                html += '<span class="text-lg font-bold text-gray-900">$' + produit.prix + '</span>';
+                                html +=
+                                    '<h5 class="text-lg font-semibold leading-tight mb-2">' +
+                                    produit.nom + '</h5>';
+                                html += '<p class="text-sm text-gray-600 mb-4">' +
+                                    produit.description + '</p>';
+                                html +=
+                                    '<div class="flex items-center justify-between">';
+                                html +=
+                                    '<span class="text-lg font-bold text-gray-900">$' +
+                                    produit.prix + '</span>';
                                 html += '</div>';
                                 html += '</div>';
                                 html += '</div>';
                             });
                         }
-    
+
                         $('.product-list').html(html);
                     }
                 });
             });
         });
     </script>
-    
+
 
 </body>
 
 </html>
-

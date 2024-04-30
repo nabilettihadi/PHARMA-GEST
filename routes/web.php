@@ -39,10 +39,8 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-Route::get('/utilisateur/about',function()
-{
-return view('about');
-    
+Route::get('/utilisateur/about', function () {
+    return view('about');
 })->name('about');
 
 
@@ -57,8 +55,6 @@ Route::group(['middleware' => 'pharmacien'], function () {
     Route::put('/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
     Route::delete('/produits/{produit}', [ProduitController::class, 'destroy'])->name('produits.destroy');
     Route::get('/statistiques', [ProduitController::class, 'statistiques'])->name('statistiques.index');
-
-
 });
 
 
@@ -94,3 +90,6 @@ Route::get('/contact', [ContactController::class, 'show'])->name('contact.show')
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/search', [ProduitController::class, 'search'])->name('produits.search');
+Route::post('/contact', [ContactController::class, 'storeContact'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'storeContact'])->name('contact.store');
+Route::get('/admin/contacts', [ContactController::class, 'showContacts'])->name('admin.contacts');

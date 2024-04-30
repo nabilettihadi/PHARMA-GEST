@@ -13,112 +13,115 @@
 
 <body class="bg-gray-100 font-sans antialiased">
 
-<!-- Barre de navigation -->
-<nav class="navbar py-4 bg-white shadow-lg">
-    <div class="container mx-auto px-4 flex justify-between items-center">
-        <!-- Logo -->
-        <a href="/" class="text-2xl font-semibold text-gray-800">Pharma<span
-                class="text-blue-500">Care</span></a>
+    <!-- Barre de navigation -->
+    <nav class="navbar py-4 bg-white shadow-lg">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="text-2xl font-semibold text-gray-800">Pharma<span
+                    class="text-blue-500">Care</span></a>
 
 
-        <ul class="hidden md:flex space-x-4 items-center">
-            <!-- Authentification -->
-            @auth
-                @if (auth()->user()->role === 'utilisateur')
-                    <li><a href="{{ route('utilisateur.dashboard') }}"
-                            class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
-                @elseif(auth()->user()->role === 'pharmacien')
-                    <li><a href="{{ route('pharmacien.dashboard') }}"
-                            class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
-                @endif
-            @endAuth
+            <ul class="hidden md:flex space-x-4 items-center">
+                <!-- Authentification -->
+                @auth
+                    @if (auth()->user()->role === 'utilisateur')
+                        <li><a href="{{ route('utilisateur.dashboard') }}"
+                                class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
+                    @elseif(auth()->user()->role === 'pharmacien')
+                        <li><a href="{{ route('pharmacien.dashboard') }}"
+                                class="text-gray-600 hover:text-gray-800">Dashboard</a></li>
+                    @endif
+                @endAuth
+                <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
+                <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
+                <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
+                <!-- Authentification pour le panier -->
+                @guest
+                    <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800"><i
+                                class="fas fa-user-plus mr-1"></i>Inscription</a></li>
+                    <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800"><i
+                                class="fas fa-user-plus mr-1"></i>Connexion</a></li>
+                @endguest
+            </ul>
+            <!-- Menu de navigation -->
+            <div class="md:hidden flex items-center">
+                <button class="text-gray-600 focus:outline-none mr-4" id="burgerBtn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            <!-- Panier -->
+            <ul class="md:flex space-x-4 items-center">
+                <li>
+                    <a href="#" id="cartNavbarBtn"
+                        class="flex items-center justify-center rounded-md bg-blue-500 px-4 py-2 text-white font-semibold hover:bg-blue-600 transition duration-300">
+                        <i class="fas fa-shopping-cart mr-2"></i>
+                        @auth
+                            <span
+                                class="cart-items">{{ auth()->user()->commandes()->where('etat', 'En attente')->count() }}</span>
+                        @endauth
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- Menu burger pour les écrans mobiles -->
+        <ul class="md:hidden bg-white absolute top-0 left-0 right-0 mt-16 rounded-lg shadow-md py-4 px-6 space-y-4 text-center"
+            style="display: none;" id="burgerMenu">
+            @guest
+                <!-- Authentification pour mobile -->
+                <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
+                <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
+            @endguest
             <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
             <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
             <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
-            <!-- Authentification pour le panier -->
-            @guest
-                <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800"><i
-                            class="fas fa-user-plus mr-1"></i>Inscription</a></li>
-                <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800"><i
-                            class="fas fa-user-plus mr-1"></i>Connexion</a></li>
-            @endguest
         </ul>
-        <!-- Menu de navigation -->
-        <div class="md:hidden flex items-center">
-            <button class="text-gray-600 focus:outline-none mr-4" id="burgerBtn">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
+
+        <!-- Dropdown des commandes -->
+        <div class="relative">
+            <ul class="absolute right-0 w-80 bg-white border border-gray-200 shadow-md rounded-lg mt-2 py-4 hidden z-50"
+                id="cartDropdown">
+                <!-- Liste des commandes de l'utilisateur -->
+                @auth
+                    @foreach (auth()->user()->commandes()->where('etat', 'En attente')->get() as $commande)
+                        <li class="flex items-center justify-between mb-4 border-b pb-3">
+                            <!-- Image de la commande -->
+                            <div class="flex items-center">
+                                <img src="{{ asset('storage/' . $commande->produit->photo) }}"
+                                    alt="{{ $commande->produit->nom }}" class="w-16 h-16 object-cover rounded-full mr-4">
+                                <!-- Détails de la commande -->
+                                <div>
+                                    <p class="font-semibold">{{ $commande->produit->nom }}</p>
+                                    <p class="text-sm text-gray-600">Quantité: {{ $commande->quantite }}</p>
+                                </div>
+                            </div>
+                            <!-- Total et état de la commande -->
+                            <div class="flex flex-col justify-between">
+                                <div class="text-gray-600">
+                                    <span>Total: ${{ $commande->total }}</span>
+                                </div>
+                                <div>
+                                    <span class="text-green-600 font-semibold">État: {{ $commande->etat }}</span>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                @endauth
+            </ul>
         </div>
-        <!-- Panier -->
-        <ul class="md:flex space-x-4 items-center">
-            <li>
-                <a href="#" id="cartNavbarBtn"
-                    class="flex items-center justify-center rounded-md bg-blue-500 px-4 py-2 text-white font-semibold hover:bg-blue-600 transition duration-300">
-                    <i class="fas fa-shopping-cart mr-2"></i>
-                    @auth
-                        <span
-                            class="cart-items">{{ auth()->user()->commandes()->where('etat', 'En attente')->count() }}</span>
-                    @endauth
-                </a>
-            </li>
-
-        </ul>
-    </div>
-
-    <!-- Menu burger pour les écrans mobiles -->
-    <ul class="md:hidden bg-white absolute top-0 left-0 right-0 mt-16 rounded-lg shadow-md py-4 px-6 space-y-4 text-center"
-        style="display: none;" id="burgerMenu">
-        @guest
-            <!-- Authentification pour mobile -->
-            <li><a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Inscription</a></li>
-            <li><a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Connexion</a></li>
-        @endguest
-        <li><a href="{{ route('produits.page') }}" class="text-gray-600 hover:text-gray-800">Produits</a></li>
-        <li><a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-gray-800">Contact</a></li>
-        <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
-    </ul>
-
-    <!-- Dropdown des commandes -->
-    <div class="relative">
-        <ul class="absolute right-0 w-80 bg-white border border-gray-200 shadow-md rounded-lg mt-2 py-4 hidden z-50" id="cartDropdown">
-            <!-- Liste des commandes de l'utilisateur -->
-            @auth
-                @foreach (auth()->user()->commandes()->where('etat', 'En attente')->get() as $commande)
-                    <li class="flex items-center justify-between mb-4 border-b pb-3">
-                        <!-- Image de la commande -->
-                        <div class="flex items-center">
-                            <img src="{{ asset('storage/' . $commande->produit->photo) }}"
-                                alt="{{ $commande->produit->nom }}" class="w-16 h-16 object-cover rounded-full mr-4">
-                            <!-- Détails de la commande -->
-                            <div>
-                                <p class="font-semibold">{{ $commande->produit->nom }}</p>
-                                <p class="text-sm text-gray-600">Quantité: {{ $commande->quantite }}</p>
-                            </div>
-                        </div>
-                        <!-- Total et état de la commande -->
-                        <div class="flex flex-col justify-between">
-                            <div class="text-gray-600">
-                                <span>Total: ${{ $commande->total }}</span>
-                            </div>
-                            <div>
-                                <span class="text-green-600 font-semibold">État: {{ $commande->etat }}</span>
-                            </div>
-                        </div>
-                    </li>
-                @endforeach
-            @endauth
-        </ul>
-    </div>
-</nav>
+    </nav>
 
 
     <!-- Contenu principal -->
-    <div class="grid md:grid-cols-2 items-center overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-white my-6 font-[sans-serif] relative z-10">
+    <div
+        class="grid md:grid-cols-2 items-center overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-white my-6 font-[sans-serif] relative z-10">
         <div class="sm:p-10 max-sm:px-4 max-sm:py-8">
             <h2 class="text-3xl font-extrabold text-gray-800">Get In <span class="text-blue-500">Touch</span></h2>
             <p class="text-sm text-gray-400 mt-3">Have a specific inquiry or looking to explore new opportunities? Our
                 experienced team is ready to engage with you.</p>
-            <form id="contactForm">
+            <form id="contactForm" action="{{ route('contact.store') }}" method="POST">
+                @csrf
                 <div class="space-y-4 mt-8">
                     <input type="text" id="name" name="name" placeholder="Full Name"
                         class="px-2 py-3 bg-transparent text-gray-800 w-full text-sm border-b border-gray-400 focus:border-blue-500 outline-none" />
@@ -141,9 +144,9 @@
                         class="px-2 pt-3 bg-transparent text-gray-800 w-full text-sm border-b border-gray-400 focus:border-blue-500 outline-none"></textarea>
                 </div>
                 <button type="submit"
-                class="mt-8 flex items-center justify-center text-sm w-full rounded px-4 py-2.5 font-semibold bg-blue-500 text-white hover:bg-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill='#fff' class="mr-2"
-                    viewBox="0 0 548.244 548.244">
+                    class="mt-8 flex items-center justify-center text-sm w-full rounded px-4 py-2.5 font-semibold bg-blue-500 text-white hover:bg-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill='#fff'
+                        class="mr-2" viewBox="0 0 548.244 548.244">
                         <path fill-rule="evenodd"
                             d="M392.19 156.054 211.268 281.667 22.032 218.58C8.823 214.168-.076 201.775 0 187.852c.077-13.923 9.078-26.24 22.338-30.498L506.15 1.549c11.5-3.697 24.123-.663 32.666 7.88 8.542 8.543 11.577 21.165 7.879 32.666L390.89 525.906c-4.258 13.26-16.575 22.261-30.498 22.338-13.923.076-26.316-8.823-30.728-22.032l-63.393-190.153z"
                             clip-rule="evenodd" data-original="#000000" />
@@ -193,68 +196,28 @@
     </footer>
 
     <!-- Validation du formulaire côté client -->
+
+
+
     <script>
-        const contactForm = document.getElementById('contactForm');
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartNavbarBtn = document.getElementById('cartNavbarBtn');
+            const cartDropdown = document.getElementById('cartDropdown');
+            const cartDropdownMobile = document.getElementById('cartDropdownMobile');
+            const burgerBtn = document.getElementById('burgerBtn');
+            const burgerMenu = document.getElementById('burgerMenu');
 
-        contactForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Empêche l'envoi du formulaire
+            cartNavbarBtn.addEventListener('click', () => {
+                cartDropdown.classList.toggle('hidden');
+                cartDropdownMobile.classList.add('hidden');
+            });
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            let isValid = true;
-
-            // Validation du nom
-            if (name.trim() === '') {
-                isValid = false;
-                document.getElementById('nameError').textContent = 'Le nom est requis.';
-            } else {
-                document.getElementById('nameError').textContent = '';
-            }
-
-            // Validation de l'email
-            if (email.trim() === '') {
-                isValid = false;
-                document.getElementById('emailError').textContent = 'L\'email est requis.';
-            } else {
-                document.getElementById('emailError').textContent = '';
-            }
-
-            // Validation du message
-            if (message.trim() === '') {
-                isValid = false;
-                document.getElementById('messageError').textContent = 'Le message est requis.';
-            } else {
-                document.getElementById('messageError').textContent = '';
-            }
-
-            if (isValid) {
-                // Envoyer le formulaire (AJAX ou redirection)
-                console.log('Formulaire valide, envoi en cours...');
-            }
+            burgerBtn.addEventListener('click', () => {
+                burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
+                cartDropdownMobile.classList.add('hidden');
+            });
         });
     </script>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const cartNavbarBtn = document.getElementById('cartNavbarBtn');
-        const cartDropdown = document.getElementById('cartDropdown');
-        const cartDropdownMobile = document.getElementById('cartDropdownMobile');
-        const burgerBtn = document.getElementById('burgerBtn');
-        const burgerMenu = document.getElementById('burgerMenu');
-
-        cartNavbarBtn.addEventListener('click', () => {
-            cartDropdown.classList.toggle('hidden');
-            cartDropdownMobile.classList.add('hidden');
-        });
-
-        burgerBtn.addEventListener('click', () => {
-            burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
-            cartDropdownMobile.classList.add('hidden');
-        });
-    });
-</script>
 </body>
 
 </html>
