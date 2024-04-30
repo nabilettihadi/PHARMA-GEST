@@ -15,11 +15,6 @@ class CommandeController extends Controller
         $commandes = Commande::all();
         return view('commandes.index', compact('commandes'));
     }
-    public function mesCommandes()
-    {
-        $commandes = Commande::where('user_id', auth()->id())->get();
-        return view('utilisateur.mescommandes', compact('commandes'));
-    }
 
     public function ajouterAuPanier($produitId)
     {
@@ -30,7 +25,7 @@ class CommandeController extends Controller
     
             // Récupérer le produit du panier de l'utilisateur s'il existe
             $commandeExistante = Commande::where('user_id', $user->id)
-                ->where('produits', $produitId)
+                ->where('produit_id', $produitId)
                 ->where('etat', 'En attente')
                 ->first();
     
@@ -58,7 +53,7 @@ class CommandeController extends Controller
                 // Créer une nouvelle commande avec le statut "En attente"
                 $commande = new Commande();
                 $commande->user_id = $user->id;
-                $commande->produits = $produitId;
+                $commande->produit_id = $produitId;
                 $commande->quantite = $quantite; // Enregistrer la quantité
                 $commande->total = $total; // Enregistrer le total calculé
                 $commande->etat = 'En attente';

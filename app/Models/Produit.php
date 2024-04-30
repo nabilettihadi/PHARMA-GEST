@@ -29,4 +29,9 @@ class Produit extends Model
 
         return null; // Return a default URL or placeholder if no photo exists
     }
+    
+    public function commandes()
+    {
+        return $this->hasMany(Commande::class);
+    }
 }

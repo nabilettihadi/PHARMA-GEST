@@ -11,7 +11,7 @@ class CreateCommandesTable extends Migration
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('produits')->constrained('produits')->onDelete('cascade');
+            $table->foreignId('produit_id')->constrained('produits')->onDelete('cascade');
             $table->unsignedInteger('quantite')->default(1);
             $table->decimal('total', 10, 2);
             $table->string('etat')->default('En attente');

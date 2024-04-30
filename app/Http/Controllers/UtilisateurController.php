@@ -8,17 +8,15 @@ use Illuminate\Http\Request;
 
 class UtilisateurController extends Controller
 {
+    
     public function index()
-    {
-        // Récupérer les commandes de l'utilisateur authentifié
-        $commandes = Commande::where('user_id', auth()->id())->get();
-
-        // Récupérer la liste des produits
-        $produits = Produit::all();
-
-        // Passer les données à la vue
-        return view('utilisateur.dashboard', compact('commandes', 'produits'));
-    }
+{
+    // Récupérer les commandes de l'utilisateur authentifié avec les produits associés
+    $commandes = Commande::where('user_id', auth()->id())->with('produits')->get();
+    // Passer les données à la vue
+    return view('utilisateur.dashboard', compact('commandes'));
+}
+    
 
     public function mesCommandes()
     {

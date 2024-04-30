@@ -113,61 +113,54 @@
 
 
 
-        <!-- Contenu principal -->
         <main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out">
-            <!-- Barre de navigation -->
-
-
             <h3 class="text-xl font-semibold mb-2 md:mb-0 text-center">Vos commandes</h3>
-            <!-- Recherche -->
-            <div class="flex space-x-4 md:ml-auto items-center mt-4 md:mt-0">
-                <input type="text" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none"
-                    placeholder="Rechercher...">
-                <button
-                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none flex items-center">
+            <div class="flex items-center justify-end mt-4 space-x-4">
+                <input type="text" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none" placeholder="Rechercher...">
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none flex items-center">
                     <i class="fas fa-search mr-2"></i>Rechercher
                 </button>
             </div>
-
-
-            <!-- Contenu des commandes avec pagination -->
             <div class="container mx-auto px-4 py-8">
-                <div class="bg-white shadow-md rounded-lg p-8">
-
-                    <!-- Grid Layout pour les commandes -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Cartes de commande -->
-                        @foreach ($commandes as $commande)
-                            <div class="bg-gray-100 shadow-md rounded-lg p-4">
-                                <div class="text-lg font-semibold mb-2">Commande #{{ $commande->id }}</div>
-                                <div class="text-sm text-gray-600 mb-2">Date de commande:
-                                    {{ $commande->created_at->format('d/m/Y') }}</div>
-                                <div class="text-sm text-gray-600 mb-2">Montant: {{ $commande->montant }}</div>
-                                <div>
-                                    @if ($commande->statut == 'en_attente')
-                                        <span class="bg-yellow-200 text-yellow-800 py-1 px-2 rounded-full">En
-                                            attente</span>
-                                    @elseif ($commande->statut == 'en_cours')
-                                        <span class="bg-blue-200 text-blue-800 py-1 px-2 rounded-full">En cours</span>
-                                    @elseif ($commande->statut == 'livree')
-                                        <span class="bg-green-200 text-green-800 py-1 px-2 rounded-full">Livré</span>
-                                    @else
-                                        <span class="bg-gray-200 text-gray-800 py-1 px-2 rounded-full">Indéfini</span>
-                                    @endif
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    @forelse ($commandes as $commande)
+                        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                            <div class="bg-gray-100 px-4 py-2">
+                                <div class="flex justify-between items-center">
+                                    <div class="text-lg font-semibold">Commande {{ $commande->id }}</div>
+                                    <div class="text-sm text-gray-600"> {{ $commande->created_at->format('d/m/Y') }}</div>
+                                </div>
+                                <div class="text-sm text-gray-600">Montant: {{ $commande->total }}</div>
+                                <div class="mt-2">
+                                    <span class="text-sm font-semibold">État:</span>
+                                    <span class=" text-black py-1 px-2 rounded-full">{{ $commande->etat }}</span>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
+                            <div class="px-4 py-2">
+                                <h4 class="text-lg font-semibold mb-2">Produits:</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                    @if ($commandes->isEmpty())
-                        <div class="mt-8">
-                            <p class="text-lg text-center">Vous n'avez aucune commande.</p>
+                                        <div class="bg-gray-100 shadow-md rounded-lg p-4">
+                                            <a href="#!" class="block">
+                                                <img class="w-full h-48 object-cover object-center" src="{{ asset('storage/' . $commande->produits->photo) }}" alt="{{ $commande->produits->nom }}">
+                                            </a>
+                                            <div class="p-6">
+                                                <h5 class="text-lg font-semibold leading-tight mb-2">{{ $commande->produits->nom }}</h5>
+                                                <p class="text-sm text-gray-600 mb-4">{{ $commande->produits->description }}</p>
+
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
                         </div>
-                    @endif
+                    @empty
+                        <div class="text-lg text-center">Vous n'avez aucune commande.</div>
+                    @endforelse
                 </div>
             </div>
         </main>
-
+        
 
     </body>
 

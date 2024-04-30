@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PharmaCare - Mes commandes</title>
+    <title>PharmaCare - Tableau de bord</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -109,54 +109,59 @@
         });
     </script>
 
+    <body class="bg-gray-100">
 
-    <!-- Barre de navigation -->
-    <div class="container mx-auto px-4 py-4 md:flex md:justify-between md:items-center">
 
-        <h3 class="text-xl font-semibold mb-2 md:mb-0 text-center">Vos commandes</h3>
-        <!-- Recherche -->
-        <div class="flex space-x-4 md:ml-auto items-center mt-4 md:mt-0">
-            <input type="text" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none"
-                placeholder="Rechercher...">
-            <button
-                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none flex items-center">
+        <div class="flex items-center justify-center mt-4 space-x-4">
+            <input type="text" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none" placeholder="Rechercher...">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none flex items-center">
                 <i class="fas fa-search mr-2"></i>Rechercher
             </button>
         </div>
-    </div>
 
+        <main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out">
 
+            <div class="container mx-auto px-4 py-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    @forelse ($commandes as $commande)
+                        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                            <div class="bg-blue-100 px-4 py-2">
+                                <div class="flex justify-between items-center">
+                                    <div class="text-lg font-semibold">Commande {{ $commande->id }}</div>
+                                    <div class="text-sm text-gray-600"> {{ $commande->created_at->format('d/m/Y') }}</div>
+                                </div>
+                                <div class="text-sm text-gray-600">Montant: {{ $commande->total }}</div>
+                                <div class="mt-2">
+                                    <span class="text-sm font-semibold">État:</span>
+                                    <span class=" text-black py-1 px-2 rounded-full">{{ $commande->etat }}</span>
+                                </div>
+                            </div>
+                            <div class="px-4 py-2">
+                                <h4 class="text-lg font-semibold mb-2">Produits:</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-    <!-- Liste des commandes -->
-    <ul>
-        @foreach ($commandes as $commande)
-            <li class="flex items-center justify-between mb-4 border-b pb-3">
-                <!-- Image de la commande -->
-                <div class="flex items-center">
-                    <img src="{{ asset('storage/' . $commande->produit->photo) }}" alt="{{ $commande->produit->nom }}"
-                        class="w-16 h-16 object-cover rounded-full mr-4">
-                    <!-- Détails de la commande -->
-                    <div>
-                        <p class="font-semibold">{{ $commande->produit->nom }}</p>
-                        <p class="text-sm text-gray-600">Quantité: {{ $commande->quantite }}</p>
-                    </div>
+                                        <div class="bg-gray-100 shadow-md rounded-lg p-4">
+                                            <a href="#!" class="block">
+                                                <img class="w-full h-48 object-cover object-center" src="{{ asset('storage/' . $commande->produits->photo) }}" alt="{{ $commande->produits->nom }}">
+                                            </a>
+                                            <div class="p-6">
+                                                <h5 class="text-lg font-semibold leading-tight mb-2">{{ $commande->produits->nom }}</h5>
+                                                <p class="text-sm text-gray-600 mb-4">{{ $commande->produits->description }}</p>
+
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-lg text-center">Vous n'avez aucune commande.</div>
+                    @endforelse
                 </div>
-                <!-- Actions sur la commande -->
-                <div class="flex items-center space-x-4">
-                    <!-- Lien de modification -->
-                    <a href="{{ route('commandes.edit', $commande->id) }}" class="text-blue-500 hover:text-blue-700">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>
-                    <!-- Lien de suppression -->
-                    <a href="{{ route('commandes.destroy', $commande->id) }}" class="text-red-500 hover:text-red-700">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
-                </div>
-            </li>
-        @endforeach
-    </ul>
+            </div>
+        </main>
+        
 
-
-</body>
+    </body>
 
 </html>

@@ -51,16 +51,15 @@
         <!-- Dropdown pour le burger menu -->
         <div class="burger-dropdown bg-gray-800 text-white py-2 px-4">
             <ul class="space-y-2">
-                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('pharmacien.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
-                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-tasks mr-2"></i>Gestion des commandes</a></li>
+
                 <li><a href="{{ route('produits.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-cube mr-2"></i>Gestion des produits</a></li>
-                <li><a href="statistiques" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('statistiques.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
 
-                <li><a href="/logout" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
             </ul>
         </div>
@@ -79,16 +78,15 @@
         </div>
         <nav class="flex-1 py-4">
             <ul class="space-y-2">
-                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('pharmacien.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
-                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-tasks mr-2"></i>Gestion des commandes</a></li>
+
                 <li><a href="{{ route('produits.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-cube mr-2"></i>Gestion des produits</a></li>
-                <li><a href="statistiques" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('statistiques.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
 
-                <li><a href="/logout" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
             </ul>
         </nav>

@@ -51,24 +51,22 @@
         <!-- Dropdown pour le burger menu -->
         <div class="burger-dropdown bg-gray-800 text-white py-2 px-4">
             <ul class="space-y-2">
-                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('pharmacien.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
-                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-tasks mr-2"></i>Gestion des commandes</a></li>
+
                 <li><a href="{{ route('produits.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-cube mr-2"></i>Gestion des produits</a></li>
-                <li><a href="statistiques" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('statistiques.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
 
-                <li><a href="/logout" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
             </ul>
         </div>
     </div>
 
     <!-- Sidebar -->
-    <aside
-        class="sidebar bg-gray-800 text-white h-screen w-64 fixed top-0 left-0 flex flex-col justify-between hidden md:block">
+    <aside class="sidebar bg-gray-800 text-white h-screen w-64 fixed top-0 left-0 flex flex-col justify-between hidden md:block">
         <div class="p-4 border-b border-gray-700">
             <a href="/" class="text-2xl font-semibold text-gray-200">Pharma<span
                     class="text-blue-500">Care</span></a>
@@ -79,16 +77,15 @@
         </div>
         <nav class="flex-1 py-4">
             <ul class="space-y-2">
-                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('pharmacien.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
-                <li><a href="#" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-tasks mr-2"></i>Gestion des commandes</a></li>
+                            
                 <li><a href="{{ route('produits.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-cube mr-2"></i>Gestion des produits</a></li>
-                <li><a href="statistiques" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('statistiques.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
 
-                <li><a href="/logout" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
             </ul>
         </nav>
@@ -97,77 +94,88 @@
         </footer>
     </aside>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const burgerBtn = document.getElementById('burgerBtn');
-            const sidebar = document.querySelector('.sidebar');
-            const burgerDropdown = document.querySelector('.burger-dropdown');
 
-            burgerBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('hidden');
-                burgerDropdown.classList.toggle('active');
-            });
-        });
-    </script>
-
-    <!-- Contenu principal -->
-    <main class="container mx-auto px-4 py-12">
-        <div class="w-full bg-white p-8 rounded-lg shadow-lg">
-            <h1 class="text-3xl font-bold text-center mb-8">Liste des Produits</h1>
-            <a href="{{ route('produits.create') }}"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mb-4 inline-block">Ajouter un
-                Produit</a>
-            <div class="overflow-x-auto">
-                <table class="w-full table-auto">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="px-4 py-2">ID</th>
-                            <th class="px-4 py-2">Nom</th>
-                            <th class="px-4 py-2">Description</th>
-                            <th class="px-4 py-2">Prix</th>
-                            <th class="px-4 py-2">Quantité</th>
-                            <th class="px-4 py-2">Photo</th>
-                            <th class="px-4 py-2">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($produits as $produit)
-                            <tr>
-                                <td class="border px-4 py-2">{{ $produit->id }}</td>
-                                <td class="border px-4 py-2">{{ $produit->nom }}</td>
-                                <td class="border px-4 py-2">{{ $produit->description }}</td>
-                                <td class="border px-4 py-2">{{ $produit->prix }}</td>
-                                <td class="border px-4 py-2">{{ $produit->quantite }}</td>
-                                <td class="border px-4 py-2">
-                                    @if ($produit->photo)
-                                        <img src="{{ asset('storage/' . $produit->photo) }}" alt="{{ $produit->nom }}"
-                                            class="h-10">
-                                    @else
-                                        Pas de photo
-                                    @endif
-                                </td>
-                                <td class="border px-4 py-2">
-                                    <a href="{{ route('produits.show', $produit->id) }}"
-                                        class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-lg mr-2">Voir</a>
-                                    <a href="{{ route('produits.edit', $produit->id) }}"
-                                        class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-lg mr-2">Modifier</a>
-                                    <form action="{{ route('produits.destroy', $produit->id) }}" method="POST"
-                                        style="display: inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg"
-                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit?')">Supprimer</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+   <!-- Contenu principal -->
+   <main class="container mx-auto px-4 py-12">
+    <div class="w-full bg-white p-8 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-center mb-8">Liste des Produits</h1>
+        <a href="{{ route('produits.create') }}"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mb-4 inline-block">Ajouter un
+            Produit</a>
+        <div class="overflow-x-auto">
+            <table class="w-full table-auto">
+                <!-- Table headers -->
+                <thead>
+                    <!-- Table row -->
+                    <tr class="bg-gray-200">
+                        <th class="px-4 py-2">ID</th>
+                        <th class="px-4 py-2">Nom</th>
+                        <th class="px-4 py-2">Description</th>
+                        <th class="px-4 py-2">Prix</th>
+                        <th class="px-4 py-2">Quantité</th>
+                        <th class="px-4 py-2">Photo</th>
+                        <th class="px-4 py-2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through your products -->
+                    @foreach ($produits as $produit)
+                    <!-- Table row for each product -->
+                    <tr>
+                        <td class="border px-4 py-2">{{ $produit->id }}</td>
+                        <td class="border px-4 py-2">{{ $produit->nom }}</td>
+                        <td class="border px-4 py-2">{{ $produit->description }}</td>
+                        <td class="border px-4 py-2">{{ $produit->prix }}</td>
+                        <td class="border px-4 py-2">{{ $produit->quantite }}</td>
+                        <td class="border px-4 py-2">
+                            <!-- Display product photo or placeholder -->
+                            @if ($produit->photo)
+                            <img src="{{ asset('storage/' . $produit->photo) }}" alt="{{ $produit->nom }}"
+                                class="h-10">
+                            @else
+                            Pas de photo
+                            @endif
+                        </td>
+                        <td class="border px-4 py-2">
+                            <!-- Product actions -->
+                            <a href="{{ route('produits.show', $produit->id) }}"
+                                class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-lg mr-2">Voir</a>
+                            <a href="{{ route('produits.edit', $produit->id) }}"
+                                class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-lg mr-2">Modifier</a>
+                            <form action="{{ route('produits.destroy', $produit->id) }}" method="POST"
+                                style="display: inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg"
+                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit?')">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-    </main>
+    </div>
+</main>
 
+<!-- Script for burger menu functionality -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const burgerBtn = document.getElementById('burgerBtn');
+        const sidebar = document.querySelector('.sidebar');
+        const burgerDropdown = document.querySelector('.burger-dropdown');
+
+        burgerBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            burgerDropdown.classList.toggle('active');
+        });
+    });
+</script>
+
+</body>
+
+</html>
 </body>
 
 </html>

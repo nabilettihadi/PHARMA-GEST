@@ -10,6 +10,7 @@ class CreateProduitsTable extends Migration
     {
         Schema::create('produits', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Ajout de la colonne user_id
             $table->string('nom');
             $table->text('description');
             $table->float('prix');
@@ -17,6 +18,7 @@ class CreateProduitsTable extends Migration
             $table->string('photo')->nullable();
             $table->timestamps();
         });
+        
     }
 
     public function down()

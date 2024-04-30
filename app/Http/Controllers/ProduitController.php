@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Produit;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProduitController extends Controller
 {
     public function index()
     {
-        $produits = Produit::all();
+        // Récupérer l'utilisateur connecté
+        $user = Auth::user();
+    
+        // Récupérer les produits créés par cet utilisateur
+        $produits = Produit::where('user_id', $user->id)->get();
+    
         return view('produits.index', compact('produits'));
     }
     public function welcome()
@@ -34,25 +40,33 @@ class ProduitController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'nom' => 'required|string|max:255',
-            'description' => 'required|string',
-            'prix' => 'required|numeric',
-            'quantite' => 'required|integer',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+{
+    $request->validate([
+        'nom' => 'required|string|max:255',
+        'description' => 'required|string',
+        'prix' => 'required|numeric',
+        'quantite' => 'required|integer',
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        $produit = Produit::create($request->all());
+    // Récupérer l'utilisateur connecté
+    $user = Auth::user();
 
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('produits', 'public');
-            $produit->photo = $photoPath;
-            $produit->save();
-        }
+    // Créer un nouveau produit associé à l'utilisateur actuel
+    $produit = new Produit($request->all());
+    $produit->user_id = $user->id; // Définir l'`user_id`
+    $produit->save();
 
-        return redirect()->route('produits.index')->with('success', 'Produit ajouté avec succès!');
+    // Gérer l'upload de la photo si elle est fournie
+    if ($request->hasFile('photo')) {
+        $photoPath = $request->file('photo')->store('produits', 'public');
+        $produit->photo = $photoPath;
+        $produit->save();
     }
+
+    return redirect()->route('produits.index')->with('success', 'Produit ajouté avec succès!');
+}
+
 
     public function show($id)
     {

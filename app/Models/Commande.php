@@ -24,8 +24,9 @@ class Commande extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function produit()
+    public function produits()
     {
-        return $this->belongsTo(Produit::class, 'produits');
+        return $this->belongsTo(Produit::class, 'produit_id');
     }
+
 }
