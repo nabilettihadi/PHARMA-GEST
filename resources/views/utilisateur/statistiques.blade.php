@@ -53,10 +53,12 @@
             <ul class="space-y-2">
                 <li><a href="{{ route('utilisateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
-                <li><a href="{{ route('utilisateur.mescommandes') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-tasks mr-2"></i>Mes commandes</a></li>
+                <li><a href="{{ route('utilisateur.mescommandes') }}"
+                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tasks mr-2"></i>Mes
+                        commandes</a></li>
 
-                <li><a href="{{ route('utilisateur.statistiques') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('utilisateur.statistiques') }}"
+                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
 
                 <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
@@ -84,7 +86,8 @@
                         class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tasks mr-2"></i>Mes
                         commandes</a></li>
 
-                <li><a href="{{ route('utilisateur.statistiques') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('utilisateur.statistiques') }}"
+                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
 
                 <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
@@ -110,9 +113,40 @@
     </script>
 
 
+    <main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out pt-24 md:pt-0">
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-3xl font-semibold mb-4 text-center">Statistiques des commandes</h1>
 
-        
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <i class="fas fa-check-circle text-green-500 text-4xl mb-4"></i>
+                    <h2 class="text-xl font-semibold mb-2">Nombre de commandes confirmées</h2>
+                    <p class="text-lg">{{ $nombreCommandesConfirmees }}</p>
+                </div>
 
-    </body>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <i class="fas fa-clock text-yellow-500 text-4xl mb-4"></i>
+                    <h2 class="text-xl font-semibold mb-2">Nombre de commandes en attente</h2>
+                    <p class="text-lg">{{ $nombreCommandesEnAttente }}</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <i class="fas fa-dollar-sign text-blue-500 text-4xl mb-4"></i>
+                    <h2 class="text-xl font-semibold mb-2">Commande la plus chère</h2>
+                    <p class="text-lg">{{ $commandePlusChere ? $commandePlusChere->total : 'N/A' }}</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <i class="fas fa-coins text-purple-500 text-4xl mb-4"></i>
+                    <h2 class="text-xl font-semibold mb-2">Commande la moins chère</h2>
+                    <p class="text-lg">{{ $commandeMoinsChere ? $commandeMoinsChere->total : 'N/A' }}</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+</body>
 
 </html>

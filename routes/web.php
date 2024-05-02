@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UtilisateurController;
 use App\Http\Controllers\PharmacienController;
 use App\Http\Controllers\ProduitController;
@@ -22,8 +23,9 @@ use App\Http\Controllers\ContactController;
 */
 
 
-
 Route::post('/ajouter-au-panier/{produitId}', [CommandeController::class, 'ajouterAuPanier'])->name('ajouter-au-panier');
+Route::group(['middleware' => 'guest'], function () {
+
 
 // Route pour afficher le formulaire d'inscription
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -37,8 +39,8 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // Route pour traiter la connexion
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
+});
 
 Route::get('/utilisateur/about', function () {
     return view('about');
@@ -57,17 +59,11 @@ Route::group(['middleware' => 'pharmacien'], function () {
     Route::delete('/produits/{produit}', [ProduitController::class, 'destroy'])->name('produits.destroy');
     Route::get('/statistiques', [ProduitController::class, 'statistiques'])->name('statistiques.index');
     Route::post('/pharmacien/completer-profil', [PharmacienController::class, 'completerProfil'])->name('pharmacien.completerProfil');
-
-
-
 });
 
-
-
-
-
-
-
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+});
 
 Route::group(['middleware' => 'utilisateur'], function () {
     // Routes accessibles aux utilisateurs

@@ -34,4 +34,9 @@ class Produit extends Model
     {
         return $this->hasMany(Commande::class);
     }
+
+    public function pharmacien()
+    {
+        return $this->belongsTo(Pharmacien::class);
+    }
 }

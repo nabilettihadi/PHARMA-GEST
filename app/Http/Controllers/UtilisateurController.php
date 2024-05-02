@@ -56,7 +56,31 @@ class UtilisateurController extends Controller
 
     public function statistiques()
     {
-        return view('utilisateur.statistiques');
+        
+        $user = Auth::user();
+    
+        // Nombre de commandes confirmées
+        $nombreCommandesConfirmees = Commande::where('user_id', $user->id)
+            ->where('etat', 'Confirmée')
+            ->count();
+    
+        // Nombre de commandes en attente
+        $nombreCommandesEnAttente = Commande::where('user_id', $user->id)
+            ->where('etat', 'En attente')
+            ->count();
+    
+        // Commande la plus chère
+        $commandePlusChere = Commande::where('user_id', $user->id)
+            ->orderByDesc('total')
+            ->first();
+    
+        // Commande la moins chère
+        $commandeMoinsChere = Commande::where('user_id', $user->id)
+            ->orderBy('total')
+            ->first();
+    
+        return view('utilisateur.statistiques', compact('nombreCommandesConfirmees', 'nombreCommandesEnAttente', 'commandePlusChere', 'commandeMoinsChere'));
+
     }
 
     public function about()
@@ -102,6 +126,6 @@ class UtilisateurController extends Controller
 
         $user->delete();
 
-        return redirect()->route('utilisateur.index')->with('success', 'Utilisateur supprimé avec succès');
+        return redirect()->route('client.index')->with('success', 'Utilisateur supprimé avec succès');
     }
 }

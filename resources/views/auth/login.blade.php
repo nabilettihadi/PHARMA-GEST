@@ -180,9 +180,6 @@
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">Se
                         connecter</button>
                 </form>
-                <div class="text-center mt-4">
-                    <a href="#" class="text-gray-600 hover:text-blue-600">Mot de passe oublié ?</a>
-                </div>
             </div>
         </div>
     </div>

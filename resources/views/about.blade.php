@@ -223,22 +223,6 @@
                 <p class="text-gray-600 text-center">Nous nous engageons à offrir des solutions novatrices pour la
                     santé et le bien-être de nos clients.</p>
             </div>
-
-            <!-- Section Expertise -->
-            <div id="expertise"
-                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex flex-col items-center cursor-pointer">
-                <i class="fas fa-laptop-medical text-4xl text-blue-500 mb-4"></i>
-                <h2 class="text-xl font-semibold mb-2 text-center">Notre Expertise</h2>
-                <p class="text-gray-600 text-center">Découvrez notre expertise dans le domaine de la santé.</p>
-            </div>
-            <div id="expertise-info"
-                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex flex-col items-center hidden">
-                <h3 class="text-xl font-semibold mb-2 text-center">Notre Expertise</h3>
-                <img src="{{ asset('storage/photos/expertise.jpg') }}" alt="Expertise PharmaCare"
-                    class="mb-4 rounded-lg shadow-md">
-                <p class="text-gray-600 text-center">Nous mettons à profit notre expérience pour offrir des solutions
-                    de santé innovantes.</p>
-            </div>
         </div>
     </main>
 
@@ -269,11 +253,6 @@
                 valeursInfo.classList.toggle('hidden');
             });
 
-            const expertise = document.getElementById('expertise');
-            const expertiseInfo = document.getElementById('expertise-info');
-            expertise.addEventListener('click', () => {
-                expertiseInfo.classList.toggle('hidden');
-            });
         });
     </script>
 

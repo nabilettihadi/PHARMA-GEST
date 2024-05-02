@@ -130,39 +130,43 @@
         });
     </script>
 
-    <div class="container mx-auto px-4 py-8 ml-64">
-        <h1 class="text-2xl font-semibold mb-4">Messages des contacts</h1>
+<div class="container mx-auto px-4 py-8 ml-64">
+    <h1 class="text-2xl font-semibold mb-4">Messages des contacts</h1>
 
-        @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                <span class="block sm:inline">{{ session('success') }}</span>
-            </div>
-        @endif
+    @if (session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 transition duration-300 ease-in-out" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
 
-        @if ($contacts->isEmpty())
-            <div class="bg-gray-200 px-4 py-2 rounded-md mb-4">
-                <p class="text-gray-800">Aucun message de contact trouvé.</p>
-            </div>
-        @else
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                @foreach ($contacts as $contact)
-                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                        <div class="p-6">
-                            <div class="flex justify-between items-center mb-4">
-                                <h2 class="text-lg font-semibold">{{ $contact->name }}</h2>
-                                <span class="text-gray-600">{{ $contact->created_at->format('d/m/Y H:i') }}</span>
-                            </div>
-                            <p class="text-gray-600">{{ $contact->email }}</p>
-                            <p class="text-gray-600">{{ $contact->phone }}</p>
+    @if ($contacts->isEmpty())
+        <div class="bg-gray-200 px-4 py-2 rounded-md mb-4">
+            <p class="text-gray-800">Aucun message de contact trouvé.</p>
+        </div>
+    @else
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            @foreach ($contacts as $contact)
+                <div class="bg-white shadow-md rounded-lg overflow-hidden transition duration-300 ease-in-out transform hover:scale-105">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-semibold text-gray-800">{{ $contact->name }}</h2>
+                            <span class="text-gray-600">{{ $contact->created_at->format('d/m/Y H:i') }}</span>
                         </div>
-                        <div class="px-6 pb-4 border-t border-gray-200">
-                            <p class="text-gray-700">{{ $contact->message }}</p>
-                        </div>
+                        <p class="text-gray-600">{{ $contact->email }}</p>
+                        <p class="text-gray-600">{{ $contact->phone }}</p>
                     </div>
-                @endforeach
-            </div>
-        @endif
-    </div>
+                    <div class="px-6 pb-4 border-t border-gray-200">
+                        <p class="text-gray-700">{{ $contact->message }}</p>
+                    </div>
+                    
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
+
+
+
 
 
 </body>

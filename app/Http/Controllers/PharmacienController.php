@@ -22,13 +22,20 @@ class PharmacienController extends Controller
     }
 
     public function destroy($id)
-    {
-        $pharmacien = User::findOrFail($id);
+{
+    $pharmacien = User::findOrFail($id);
 
-        $pharmacien->delete();
+    // Supprimer d'abord les enregistrements liés dans les autres tables, par exemple dans la table pharmacien
+    $pharmacien->pharmacien()->delete();
 
-        return redirect()->route('pharmacien.index')->with('success', 'Pharmacien supprimé avec succès');
-    }
+    // Ensuite, supprimer l'utilisateur même s'il existe des enregistrements liés
+    $pharmacien->forceDelete();
+
+    return redirect()->route('pharmacien.index')->with('success', 'Pharmacien supprimé avec succès');
+}
+
+
+
 
     public function completerProfil(Request $request)
     {

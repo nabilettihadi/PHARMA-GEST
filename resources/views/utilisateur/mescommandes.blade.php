@@ -53,10 +53,12 @@
             <ul class="space-y-2">
                 <li><a href="{{ route('utilisateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
-                <li><a href="{{ route('utilisateur.mescommandes') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-tasks mr-2"></i>Mes commandes</a></li>
+                <li><a href="{{ route('utilisateur.mescommandes') }}"
+                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tasks mr-2"></i>Mes
+                        commandes</a></li>
 
-                <li><a href="{{ route('utilisateur.statistiques') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('utilisateur.statistiques') }}"
+                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
 
                 <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
@@ -84,7 +86,8 @@
                         class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tasks mr-2"></i>Mes
                         commandes</a></li>
 
-                <li><a href="{{ route('utilisateur.statistiques') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('utilisateur.statistiques') }}"
+                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
 
                 <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
@@ -111,20 +114,22 @@
 
     <body class="bg-gray-100">
 
-<!-- Dropdown pour filtrer les commandes par état -->
-<div class="flex items-center justify-center mt-4">
-    <form action="{{ route('filtrer.commandes') }}" method="GET">
-        <label for="etat" class="mr-2">Filtrer par état :</label>
-        <select name="etat" id="etat" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none">
-            <option value="Tous">Tous</option> <!-- Ajout de l'option "Tous" pour récupérer toutes les commandes -->
-            <option value="En attente">En attente</option>
-            <option value="Confirmée">Confirmée</option>
-        </select>
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-600 focus:outline-none">
-            Filtrer
-        </button>
-    </form>
-</div>
+
+        <div class="flex items-center justify-center mt-4">
+            <form action="{{ route('filtrer.commandes') }}" method="GET">
+                <label for="etat" class="mr-2">Filtrer par état :</label>
+                <select name="etat" id="etat"
+                    class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none">
+                    <option value="Tous">Tous</option>
+                    <option value="En attente">En attente</option>
+                    <option value="Confirmée">Confirmée</option>
+                </select>
+                <button type="submit"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-600 focus:outline-none">
+                    Filtrer
+                </button>
+            </form>
+        </div>
 
 
 
@@ -137,7 +142,8 @@
                             <div class="bg-blue-100 px-4 py-2">
                                 <div class="flex justify-between items-center">
                                     <div class="text-lg font-semibold">Commande {{ $commande->id }}</div>
-                                    <div class="text-sm text-gray-600"> {{ $commande->created_at->format('d/m/Y') }}</div>
+                                    <div class="text-sm text-gray-600"> {{ $commande->created_at->format('d/m/Y') }}
+                                    </div>
                                 </div>
                                 <div class="text-sm text-gray-600">Montant: {{ $commande->total }}</div>
                                 <div class="mt-2">
@@ -149,16 +155,20 @@
                                 <h4 class="text-lg font-semibold mb-2">Produits:</h4>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                                        <div class="bg-gray-100 shadow-md rounded-lg p-4">
-                                            <a href="#!" class="block">
-                                                <img class="w-full h-48 object-cover object-center" src="{{ asset('storage/' . $commande->produits->photo) }}" alt="{{ $commande->produits->nom }}">
-                                            </a>
-                                            <div class="p-6">
-                                                <h5 class="text-lg font-semibold leading-tight mb-2">{{ $commande->produits->nom }}</h5>
-                                                <p class="text-sm text-gray-600 mb-4">{{ $commande->produits->description }}</p>
+                                    <div class="bg-gray-100 shadow-md rounded-lg p-4">
+                                        <a href="#!" class="block">
+                                            <img class="w-full h-48 object-cover object-center"
+                                                src="{{ asset('storage/' . $commande->produits->photo) }}"
+                                                alt="{{ $commande->produits->nom }}">
+                                        </a>
+                                        <div class="p-6">
+                                            <h5 class="text-lg font-semibold leading-tight mb-2">
+                                                {{ $commande->produits->nom }}</h5>
+                                            <p class="text-sm text-gray-600 mb-4">
+                                                {{ $commande->produits->description }}</p>
 
-                                            </div>
                                         </div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -169,7 +179,7 @@
                 </div>
             </div>
         </main>
-        
+
 
     </body>
 

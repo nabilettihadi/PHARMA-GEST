@@ -128,7 +128,55 @@
         });
     </script>
 
+    <div class="container mx-auto px-4 py-8 ml-0 lg:w-3/4 lg:ml-64">
+        <h1 class="text-2xl font-semibold mb-4">Statistiques</h1>
+        <!-- Affichage du nombre total de pharmaciens -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="p-6 ">
+                <h2 class="text-lg font-semibold text-gray-800">Pharmaciens</h2>
+                <p class="text-gray-600">Total : {{ $nombrePharmaciens }}</p>
+            </div>
+        </div>
 
+        <!-- Affichage du nombre total de clients -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden mt-4">
+            <div class="p-6 ">
+                <h2 class="text-lg font-semibold text-gray-800">Clients</h2>
+                <p class="text-gray-600">Total : {{ $nombreClients }}</p>
+            </div>
+        </div>
+
+        <!-- Affichage des utilisateurs avec leurs produits -->
+        @foreach ($utilisateursAvecProduits as $utilisateur)
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="p-6">
+                    <h2 class="text-lg font-semibold text-gray-800">{{ $utilisateur->name }}</h2>
+                    <p class="text-gray-600">Nombre de produits : {{ $utilisateur->produits->count() }}</p>
+                    <ul>
+                        @foreach ($utilisateur->produits as $produit)
+                            <li>{{ $produit->nom }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endforeach
+
+        <!-- Affichage du nombre de commandes par client -->
+        @foreach ($commandesParClient as $client)
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="p-6">
+                    <h2 class="text-lg font-semibold text-gray-800">{{ $client->name }}</h2>
+                    <p class="text-gray-600">Commandes : {{ $client->commandes->count() }}</p>
+                    <ul>
+                        @foreach ($client->commandes as $commande)
+                            <li>{{ $commande->nom_produit }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endforeach
+
+    </div>
 
 </body>
 
