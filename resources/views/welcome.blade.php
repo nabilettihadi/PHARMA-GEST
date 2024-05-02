@@ -76,9 +76,8 @@
             <li><a href="{{ route('about') }}" class="text-gray-600 hover:text-gray-800">À propos</a></li>
         </ul>
 
-        <!-- Dropdown des commandes -->
         <div class="relative">
-            <ul class="absolute right-0 w-80 bg-white border border-gray-200 shadow-md rounded-lg mt-2 py-4 hidden"
+            <ul class="absolute right-0 w-70 bg-white border border-gray-200 shadow-md rounded-lg mt-2 py-4 hidden mr-2 z-50"
                 id="cartDropdown">
                 <!-- Liste des commandes de l'utilisateur -->
                 @auth

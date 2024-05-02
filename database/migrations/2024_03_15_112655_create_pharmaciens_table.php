@@ -10,8 +10,11 @@ class CreatePharmaciensTable extends Migration
     {
         Schema::create('pharmaciens', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('utilisateur_id');
-            $table->foreign('utilisateur_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->string('nom_pharmacie');
+            $table->string('adresse');
+            $table->string('telephone');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -21,4 +24,3 @@ class CreatePharmaciensTable extends Migration
         Schema::dropIfExists('pharmaciens');
     }
 }
-

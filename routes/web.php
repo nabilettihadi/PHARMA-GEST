@@ -56,6 +56,10 @@ Route::group(['middleware' => 'pharmacien'], function () {
     Route::put('/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
     Route::delete('/produits/{produit}', [ProduitController::class, 'destroy'])->name('produits.destroy');
     Route::get('/statistiques', [ProduitController::class, 'statistiques'])->name('statistiques.index');
+    Route::post('/pharmacien/completer-profil', [PharmacienController::class, 'completerProfil'])->name('pharmacien.completerProfil');
+
+
+
 });
 
 

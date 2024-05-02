@@ -111,19 +111,12 @@
 
     <body class="bg-gray-100">
 
-
-        <div class="flex items-center justify-center pt-24 md:pt-0 mt-4 space-x-4">
-            <input type="text" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none" placeholder="Rechercher...">
-            <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none flex items-center">
-                <i class="fas fa-search mr-2"></i>Rechercher
-            </button>
-        </div>
-
-        <!-- Dropdown pour filtrer les commandes par état -->
+<!-- Dropdown pour filtrer les commandes par état -->
 <div class="flex items-center justify-center mt-4">
     <form action="{{ route('filtrer.commandes') }}" method="GET">
         <label for="etat" class="mr-2">Filtrer par état :</label>
         <select name="etat" id="etat" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none">
+            <option value="Tous">Tous</option> <!-- Ajout de l'option "Tous" pour récupérer toutes les commandes -->
             <option value="En attente">En attente</option>
             <option value="Confirmée">Confirmée</option>
         </select>
@@ -132,6 +125,7 @@
         </button>
     </form>
 </div>
+
 
 
         <main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out">

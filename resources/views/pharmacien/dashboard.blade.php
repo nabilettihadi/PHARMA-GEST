@@ -10,16 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        .chart-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .chart-container canvas {
-            width: 100%;
-        }
-
         @media (min-width: 768px) {
             .chart-container {
                 flex-direction: row;
@@ -121,8 +111,63 @@
         });
     </script>
 
+<main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out pt-24 md:pt-0">
+    @if(Auth::user()->pharmacien)
+        <!-- Profile du pharmacien -->
+        <section class="bg-white p-6 mt-8 rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold mb-4 text-center">Votre Profil</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card border-gray-200 rounded-lg p-4">
+                    <p class="text-lg font-semibold text-indigo-600">Nom:</p>
+                    <p class="text-lg font-semibold">{{ Auth::user()->name }}</p>
+                </div>
+                <div class="card border-gray-200 rounded-lg p-4">
+                    <p class="text-lg font-semibold text-indigo-600">Email:</p>
+                    <p class="text-lg font-semibold">{{ Auth::user()->email }}</p>
+                </div>
+                <div class="card border-gray-200 rounded-lg p-4">
+                    <p class="text-lg font-semibold text-indigo-600">Nom de la pharmacie:</p>
+                    <p class="text-lg font-semibold">{{ Auth::user()->pharmacien->nom_pharmacie }}</p>
+                </div>
+                <div class="card border-gray-200 rounded-lg p-4">
+                    <p class="text-lg font-semibold text-indigo-600">Adresse:</p>
+                    <p class="text-lg font-semibold">{{ Auth::user()->pharmacien->adresse }}</p>
+                </div>
+                <div class="card border-gray-200 rounded-lg p-4">
+                    <p class="text-lg font-semibold text-indigo-600">Téléphone:</p>
+                    <p class="text-lg font-semibold">{{ Auth::user()->pharmacien->telephone }}</p>
+                </div>
+            </div>
+        </section>
+    @else
+        <!-- Formulaire pour compléter le profil -->
+        <section class="bg-white p-6 mt-8 rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold mb-4 text-center">Compléter votre profil</h2>
+            <form action="{{ route('pharmacien.completerProfil') }}" method="POST">
+                @csrf
+                <div class="mb-6">
+                    <label for="nom_pharmacie" class="block text-lg font-medium text-gray-700 mb-2">Nom de la pharmacie</label>
+                    <input type="text" id="nom_pharmacie" name="nom_pharmacie" class="input-field" required>
+                </div>
+                <div class="mb-6">
+                    <label for="adresse" class="block text-lg font-medium text-gray-700 mb-2">Adresse</label>
+                    <input type="text" id="adresse" name="adresse" class="input-field" required>
+                </div>
+                <div class="mb-6">
+                    <label for="telephone" class="block text-lg font-medium text-gray-700 mb-2">Téléphone</label>
+                    <input type="text" id="telephone" name="telephone" class="input-field" required>
+                </div>
+                <button type="submit" class="btn-indigo">Enregistrer</button>
+            </form>
+        </section>
+    @endif
+</main>
+
+
+
 
 
 </body>
 
 </html>
+

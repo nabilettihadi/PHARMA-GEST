@@ -111,16 +111,18 @@ class CommandeController extends Controller
     }
 
     public function filtrerCommandes(Request $request)
-    {
-        $etat = $request->input('etat');
+{
+    $etat = $request->input('etat');
 
-        if ($etat === 'En attente' || $etat === 'Confirmée') {
-            $commandes = Commande::where('etat', $etat)->get();
-        } else {
-
-            $commandes = Commande::all();
-        }
-
-        return view('utilisateur.mescommandes', ['commandes' => $commandes]);
+    if ($etat === 'Tous') {
+        $commandes = Commande::all();
+    } elseif ($etat === 'En attente' || $etat === 'Confirmée') {
+        $commandes = Commande::where('etat', $etat)->get();
+    } else {
+        $commandes = Commande::all(); // Par défaut, récupérer toutes les commandes si aucun état spécifié
     }
+
+    return view('utilisateur.mescommandes', ['commandes' => $commandes]);
+}
+
 }

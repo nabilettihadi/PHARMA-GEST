@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Produit;
+use App\Models\Commande;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +25,7 @@ class ProduitController extends Controller
         $produits = Produit::all();
         return view('welcome', compact('produits'));
     }
-    
+
     public function Page()
     {
         $produits = Produit::paginate(10);
@@ -108,20 +109,35 @@ class ProduitController extends Controller
         return redirect()->route('produits.index')->with('success', 'Produit supprimé avec succès!');
     }
 
-    public function statistiques()
-    {
+    // public function statistiques()
+    // {
 
-        $statistiquesQuantite = Produit::select('nom', DB::raw('SUM(quantite) as quantite_totale'))
-            ->groupBy('nom')
-            ->get();
+    //     $statistiquesQuantite = Produit::select('nom', DB::raw('SUM(quantite) as quantite_totale'))
+    //         ->groupBy('nom')
+    //         ->get();
 
-        $statistiquesMontant = Produit::select('nom', DB::raw('SUM(prix * quantite) as montant_total'))
-            ->groupBy('nom')
-            ->get();
+    //     $statistiquesMontant = Produit::select('nom', DB::raw('SUM(prix * quantite) as montant_total'))
+    //         ->groupBy('nom')
+    //         ->get();
 
 
-        return view('statistiques.index', compact('statistiquesQuantite', 'statistiquesMontant'));
-    }
+    //     return view('statistiques.index', compact('statistiquesQuantite', 'statistiquesMontant'));
+    // }
+
+public function statistiques()
+{
+    $statistiquesQuantite = Produit::join('commandes', 'produits.id', '=', 'commandes.produit_id')
+        ->select('produits.nom', DB::raw('SUM(commandes.quantite) as quantite_totale'))
+        ->groupBy('produits.nom')
+        ->get();
+
+    $statistiquesMontant = Produit::join('commandes', 'produits.id', '=', 'commandes.produit_id')
+        ->select('produits.nom', DB::raw('SUM(produits.prix * commandes.quantite) as montant_total'))
+        ->groupBy('produits.nom')
+        ->get();
+
+    return view('statistiques.index', compact('statistiquesQuantite', 'statistiquesMontant'));
+}
 
     public function search(Request $request)
     {

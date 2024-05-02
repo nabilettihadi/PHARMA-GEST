@@ -64,13 +64,17 @@
         <!-- Dropdown pour le burger menu -->
         <div class="burger-dropdown bg-gray-800 text-white py-2 px-4">
             <ul class="space-y-2">
-                <li><a href="{{ route('administrateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('administrateur.dashboard') }}"
+                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
 
-                <li><a href="{{ route('produits.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-cube mr-2"></i>Gestion des Pharmaciens</a></li>
-                <li><a href="{{ route('statistiques.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
+                <li><a href="{{ route('pharmacien.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-user-md mr-2"></i>Gestion des Pharmaciens</a></li>
+
+                <li><a href="{{ route('client.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-user-friends mr-2"></i>Gestion des Clients</a></li>
+                <li><a href="{{ route('admin.contacts') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-envelope-open-text mr-2"></i>Contacts</a></li>
 
                 <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
@@ -91,13 +95,16 @@
         </div>
         <nav class="flex-1 py-4">
             <ul class="space-y-2">
-                <li><a href="{{ route('administrateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('administrateur.dashboard') }}"
+                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
 
                 <li><a href="{{ route('pharmacien.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-cube mr-2"></i>Gestion des pharmaciens</a></li>
-                <li><a href="{{ route('statistiques.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
+                            class="fas fa-user-md mr-2"></i>Gestion des pharmaciens</a></li>
+                <li><a href="{{ route('client.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-user-friends mr-2"></i>Gestion des clients</a></li>
+                <li><a href="{{ route('admin.contacts') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-envelope-open-text mr-2"></i>Contacts</a></li>
 
                 <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>

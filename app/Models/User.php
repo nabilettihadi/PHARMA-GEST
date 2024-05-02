@@ -55,9 +55,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Produit::class);
     }
-    
+
     public function client(): HasOne
     {
         return $this->hasOne(Client::class);
+    }
+
+    public function pharmacien(): HasOne
+    {
+        return $this->hasOne(Pharmacien::class);
     }
 }
