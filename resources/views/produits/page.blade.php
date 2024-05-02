@@ -77,32 +77,81 @@
 
         <!-- Dropdown des commandes -->
         <div class="relative">
-            <ul class="absolute right-0 w-80 bg-white border border-gray-200 shadow-md rounded-lg mt-2 py-4 hidden"
+            <ul class="absolute right-0 w-150 bg-white border border-gray-200 shadow-md rounded-lg mt-2 py-4 hidden mr-2"
                 id="cartDropdown">
                 <!-- Liste des commandes de l'utilisateur -->
                 @auth
                     @foreach (auth()->user()->commandes()->where('etat', 'En attente')->get() as $commande)
-                        <li class="flex items-center justify-between mb-4 border-b pb-3">
-                            <!-- Image de la commande -->
-                            <div class="flex items-center">
-                                <img src="{{ asset('storage/' . $commande->produits->photo) }}"
-                                    alt="{{ $commande->produits->nom }}" class="w-16 h-16 object-cover rounded-full mr-4">
-                                <!-- Détails de la commande -->
-                                <div>
-                                    <p class="font-semibold">{{ $commande->produits->nom }}</p>
-                                    <p class="text-sm text-gray-600">Quantité: {{ $commande->quantite }}</p>
+                        <div class="bg-white shadow-md rounded-lg overflow-hidden mb-4">
+                            <!-- Contenu de la carte -->
+                            <div class="px-4 py-2">
+                                <div class="flex items-center space-x-4">
+                                    <!-- Image et détails de la commande -->
+                                    <img src="{{ asset('storage/' . $commande->produits->photo) }}"
+                                        alt="{{ $commande->produits->nom }}"
+                                        class="w-16 h-16 object-cover rounded-lg shadow-lg">
+                                    <div>
+                                        <p class="font-semibold text-xl">{{ $commande->produits->nom }}</p>
+                                        <p class="text-sm text-gray-600">Quantité: {{ $commande->quantite }}</p>
+                                    </div>
+                                </div>
+                                <!-- Actions -->
+                                <div class="flex items-center space-x-4 mt-4">
+                                    <!-- Décrémenter la quantité -->
+                                    <form action="{{ route('commandes.decrement', ['id' => $commande->id]) }}"
+                                        method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="btn btn-danger btn-sm bg-red-500 hover:bg-red-600 rounded-full px-3 py-1">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </form>
+                                    <p id="quantite-{{ $commande->id }}" class="text-lg font-semibold">
+                                        {{ $commande->quantite }}</p>
+                                    <form action="{{ route('commandes.increment', ['id' => $commande->id]) }}"
+                                        method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="btn btn-primary btn-sm bg-blue-500 hover:bg-blue-600 rounded-full px-3 py-1">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </form>
+                                    <!-- Annuler la commande -->
+                                    <form action="{{ route('commandes.cancel', ['id' => $commande->id]) }}" method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="btn btn-danger btn-sm bg-red-500 hover:bg-red-600 rounded-full px-3 py-1">
+                                            <i class="fas fa-times"></i>Annuler
+                                        </button>
+                                    </form>
+                                    <!-- Confirmer la commande -->
+                                    <form action="{{ route('commandes.confirm', ['id' => $commande->id]) }}"
+                                        method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="btn btn-success btn-sm bg-green-500 hover:bg-green-600 rounded-full px-3 py-1">
+                                            <i class="fas fa-check"></i>Confirmer
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                            <!-- Total et état de la commande -->
-                            <div class="flex flex-col justify-between">
-                                <div class="text-gray-600">
-                                    <span>Total: ${{ $commande->total }}</span>
+                            <!-- Pied de la carte -->
+                            <div class="bg-gray-100 px-4 py-2 flex justify-between items-center">
+                                <div>
+                                    <span class="text-gray-600 block">Total:</span>
+                                    <span class="font-semibold">${{ $commande->total }}</span>
                                 </div>
                                 <div>
-                                    <span class="text-green-600 font-semibold">État: {{ $commande->etat }}</span>
+                                    <span class="text-green-600 font-semibold">État:
+                                        @if ($commande->etat == 'En attente')
+                                            <span class="text-red-600">{{ $commande->etat }}</span>
+                                        @else
+                                            <span class="text-green-600">{{ $commande->etat }}</span>
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
-                        </li>
+                        </div>
                     @endforeach
                 @endauth
             </ul>
@@ -126,8 +175,8 @@
         @foreach ($produits as $produit)
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <a href="#!" class="block">
-                    <img class="w-full h-64 object-cover object-center" src="{{ asset('storage/' . $produit->photo) }}"
-                        alt="{{ $produit->nom }}">
+                    <img class="w-full h-64 object-cover object-center"
+                        src="{{ asset('storage/' . $produit->photo) }}" alt="{{ $produit->nom }}">
                 </a>
                 <div class="p-6">
                     <h5 class="text-lg font-semibold leading-tight mb-2">{{ $produit->nom }}</h5>
@@ -219,25 +268,25 @@
             });
         });
     </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const cartNavbarBtn = document.getElementById('cartNavbarBtn');
-        const cartDropdown = document.getElementById('cartDropdown');
-        const cartDropdownMobile = document.getElementById('cartDropdownMobile');
-        const burgerBtn = document.getElementById('burgerBtn');
-        const burgerMenu = document.getElementById('burgerMenu');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartNavbarBtn = document.getElementById('cartNavbarBtn');
+            const cartDropdown = document.getElementById('cartDropdown');
+            const cartDropdownMobile = document.getElementById('cartDropdownMobile');
+            const burgerBtn = document.getElementById('burgerBtn');
+            const burgerMenu = document.getElementById('burgerMenu');
 
-        cartNavbarBtn.addEventListener('click', () => {
-            cartDropdown.classList.toggle('hidden');
-            cartDropdownMobile.classList.add('hidden');
-        });
+            cartNavbarBtn.addEventListener('click', () => {
+                cartDropdown.classList.toggle('hidden');
+                cartDropdownMobile.classList.add('hidden');
+            });
 
-        burgerBtn.addEventListener('click', () => {
-            burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
-            cartDropdownMobile.classList.add('hidden');
+            burgerBtn.addEventListener('click', () => {
+                burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
+                cartDropdownMobile.classList.add('hidden');
+            });
         });
-    });
-</script>
+    </script>
 
 </body>
 

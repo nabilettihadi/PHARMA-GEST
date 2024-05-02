@@ -119,6 +119,21 @@
             </button>
         </div>
 
+        <!-- Dropdown pour filtrer les commandes par état -->
+<div class="flex items-center justify-center mt-4">
+    <form action="{{ route('filtrer.commandes') }}" method="GET">
+        <label for="etat" class="mr-2">Filtrer par état :</label>
+        <select name="etat" id="etat" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none">
+            <option value="En attente">En attente</option>
+            <option value="Confirmée">Confirmée</option>
+        </select>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-600 focus:outline-none">
+            Filtrer
+        </button>
+    </form>
+</div>
+
+
         <main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out">
 
             <div class="container mx-auto px-4 py-8">

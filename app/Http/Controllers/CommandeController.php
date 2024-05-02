@@ -18,114 +18,109 @@ class CommandeController extends Controller
 
     public function ajouterAuPanier($produitId)
     {
-        // Vérifier si l'utilisateur est connecté
+
         if (Auth::check()) {
-            // Récupérer l'utilisateur authentifié
+
             $user = Auth::user();
-    
-            // Récupérer le produit du panier de l'utilisateur s'il existe
+
+
             $commandeExistante = Commande::where('user_id', $user->id)
                 ->where('produit_id', $produitId)
                 ->where('etat', 'En attente')
                 ->first();
-    
+
             if ($commandeExistante) {
-                // Le produit existe déjà dans le panier, mettez à jour la quantité et le total
-                $commandeExistante->quantite += 1; // Augmentez la quantité
-                $commandeExistante->total = $commandeExistante->quantite * $commandeExistante->produit->prix; // Recalculez le total
-    
-                // Vérifiez si le produit existe avant d'accéder à sa propriété "produit"
-                if ($commandeExistante->produit) {
+                $commandeExistante->quantite += 1;
+                $commandeExistante->total = $commandeExistante->quantite * $commandeExistante->produits->prix;
+
+
+                if ($commandeExistante->produits) {
                     $commandeExistante->save();
                     return redirect()->back()->with('success', 'Quantité du produit mise à jour dans le panier avec succès!');
                 } else {
                     return redirect()->back()->with('error', 'Le produit associé à la commande n\'existe pas.');
                 }
             } else {
-                // Le produit n'est pas encore dans le panier, créez une nouvelle commande
+
                 $produit = Produit::findOrFail($produitId);
                 $prixProduit = $produit->prix;
-    
-                // Calculer le total en multipliant la quantité par le prix du produit
-                $quantite = 1; // Vous pouvez récupérer la quantité à partir de l'interface utilisateur
+
+
+                $quantite = 1;
                 $total = $quantite * $prixProduit;
-    
-                // Créer une nouvelle commande avec le statut "En attente"
+
+
                 $commande = new Commande();
                 $commande->user_id = $user->id;
                 $commande->produit_id = $produitId;
-                $commande->quantite = $quantite; // Enregistrer la quantité
-                $commande->total = $total; // Enregistrer le total calculé
+                $commande->quantite = $quantite;
+                $commande->total = $total;
                 $commande->etat = 'En attente';
                 $commande->save();
-    
+
                 return redirect()->back()->with('success', 'Produit ajouté au panier avec succès!');
             }
         } else {
-            // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié
+
             return redirect()->route('login')->with('error', 'Veuillez vous connecter pour ajouter des produits au panier.');
         }
     }
-    
 
-    public function create()
+    public function increment($id)
     {
-        $clients = Client::all();
-        return view('commandes.create', compact('clients'));
+        $commande = Commande::findOrFail($id);
+        $commande->quantite++;
+        $commande->total = $commande->quantite * $commande->produits->prix;
+        $commande->save();
+
+        return redirect()->back();
     }
 
-    public function store(Request $request)
+    public function decrement($id)
     {
-        // Validation des données
-        $request->validate([
-            'client_id' => 'required|exists:clients,id',
-            'date' => 'required|date',
-            'produits' => 'required|string',
-            'total' => 'required|numeric',
-            'etat' => 'required|string',
-        ]);
+        $commande = Commande::findOrFail($id);
+        if ($commande->quantite > 0) {
+            $commande->quantite--;
+            $commande->total = $commande->quantite * $commande->produits->prix;
+            $commande->save();
+        }
 
-        // Création de la commande
-        Commande::create($request->all());
 
-        return redirect()->route('commandes.index')->with('success', 'Commande créée avec succès!');
+        if ($commande->quantite === 0) {
+            $commande->delete();
+        }
+
+        return redirect()->back();
     }
 
-    public function show($id)
+    public function confirm($id)
     {
-        $commande = Commande::find($id);
-        return view('commandes.show', compact('commande'));
+        $commande = Commande::findOrFail($id);
+        $commande->etat = 'Confirmée';
+        $commande->save();
+
+        return redirect()->back();
     }
 
-    public function edit($id)
+    public function cancel($id)
     {
-        $commande = Commande::find($id);
-        $clients = Client::all();
-        return view('commandes.edit', compact('commande', 'clients'));
+        $commande = Commande::findOrFail($id);
+        $commande->delete();
+
+        return redirect()->back();
     }
 
-    public function update(Request $request, $id)
+    public function filtrerCommandes(Request $request)
     {
-        // Validation des données
-        $request->validate([
-            'client_id' => 'required|exists:clients,id',
-            'date' => 'required|date',
-            'produits' => 'required|string',
-            'total' => 'required|numeric',
-            'etat' => 'required|string',
-        ]);
+        $etat = $request->input('etat');
 
-        // Mise à jour de la commande
-        $commande = Commande::find($id);
-        $commande->update($request->all());
+        if ($etat === 'En attente' || $etat === 'Confirmée') {
+            $commandes = Commande::where('etat', $etat)->get();
+        } else {
 
-        return redirect()->route('commandes.index')->with('success', 'Commande mise à jour avec succès!');
-    }
+            $commandes = Commande::all();
+        }
 
-    public function destroy($id)
-    {
-        // Suppression de la commande
-        Commande::destroy($id);
-        return redirect()->route('commandes.index')->with('success', 'Commande supprimée avec succès!');
+        return view('utilisateur.mescommandes', ['commandes' => $commandes]);
     }
 }

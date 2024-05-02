@@ -109,59 +109,52 @@
         });
     </script>
 
-    <body class="bg-gray-100">
 
 
-
-        <main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out pt-24 md:pt-0">
-            <h3 class="text-xl font-semibold mb-2 md:mb-0 text-center">Vos commandes</h3>
-            <div class="flex items-center justify-end mt-4 space-x-4">
-                <input type="text" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none" placeholder="Rechercher...">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none flex items-center">
-                    <i class="fas fa-search mr-2"></i>Rechercher
-                </button>
+<main class="ml-0 md:ml-64 transition-all duration-300 ease-in-out pt-24 md:pt-0">
+    @if(Auth::user()->client)
+    <!-- Profile de l'utilisateur -->
+    <section class="bg-white p-6 mt-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold mb-4 text-center">Votre Profil</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="card border-gray-200 rounded-lg p-4">
+                <p class="text-lg font-semibold text-indigo-600">Nom:</p>
+                <p class="text-lg font-semibold">{{ Auth::user()->name }}</p>
             </div>
-            <div class="container mx-auto px-4 py-8">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    @forelse ($commandes as $commande)
-                        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                            <div class="bg-gray-100 px-4 py-2">
-                                <div class="flex justify-between items-center">
-                                    <div class="text-lg font-semibold">Commande {{ $commande->id }}</div>
-                                    <div class="text-sm text-gray-600"> {{ $commande->created_at->format('d/m/Y') }}</div>
-                                </div>
-                                <div class="text-sm text-gray-600">Montant: {{ $commande->total }}</div>
-                                <div class="mt-2">
-                                    <span class="text-sm font-semibold">État:</span>
-                                    <span class=" text-black py-1 px-2 rounded-full">{{ $commande->etat }}</span>
-                                </div>
-                            </div>
-                            <div class="px-4 py-2">
-                                <h4 class="text-lg font-semibold mb-2">Produits:</h4>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                                        <div class="bg-gray-100 shadow-md rounded-lg p-4">
-                                            <a href="#!" class="block">
-                                                <img class="w-full h-48 object-cover object-center" src="{{ asset('storage/' . $commande->produits->photo) }}" alt="{{ $commande->produits->nom }}">
-                                            </a>
-                                            <div class="p-6">
-                                                <h5 class="text-lg font-semibold leading-tight mb-2">{{ $commande->produits->nom }}</h5>
-                                                <p class="text-sm text-gray-600 mb-4">{{ $commande->produits->description }}</p>
-
-                                            </div>
-                                        </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="text-lg text-center">Vous n'avez aucune commande.</div>
-                    @endforelse
-                </div>
+            <div class="card border-gray-200 rounded-lg p-4">
+                <p class="text-lg font-semibold text-indigo-600">Email:</p>
+                <p class="text-lg font-semibold">{{ Auth::user()->email }}</p>
             </div>
-        </main>
-        
+            <div class="card border-gray-200 rounded-lg p-4">
+                <p class="text-lg font-semibold text-indigo-600">Adresse:</p>
+                <p class="text-lg font-semibold">{{ Auth::user()->client->adresse }}</p>
+            </div>
+            <div class="card border-gray-200 rounded-lg p-4">
+                <p class="text-lg font-semibold text-indigo-600">Téléphone:</p>
+                <p class="text-lg font-semibold">{{ Auth::user()->client->telephone }}</p>
+            </div>
+        </div>
+    </section>
+    @else
+    <!-- Formulaire pour compléter le profil -->
+    <section class="bg-white p-6 mt-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold mb-4 text-center">Compléter votre profil</h2>
+        <form action="{{ route('utilisateur.completerprofil') }}" method="POST">
+            @csrf
+            <div class="mb-6">
+                <label for="adresse" class="block text-lg font-medium text-gray-700 mb-2">Adresse</label>
+                <input type="text" id="adresse" name="adresse" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg" required>
+            </div>
+            <div class="mb-6">
+                <label for="telephone" class="block text-lg font-medium text-gray-700 mb-2">Téléphone</label>
+                <input type="text" id="telephone" name="telephone" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg" required>
+            </div>
+            <button type="submit" class="inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-lg text-white font-semibold rounded-md shadow-md">Enregistrer</button>
+        </form>
+    </section>
+    @endif
+</main>
 
-    </body>
+</body>
 
 </html>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -69,18 +70,18 @@ Route::group(['middleware' => 'utilisateur'], function () {
     Route::get('/produits/page', [ProduitController::class, 'Page'])->name('produits.page');
     Route::get('/utilisateur/dashboard', [UtilisateurController::class, 'index'])->name('utilisateur.dashboard');
     Route::get('/rechercher-commandes', [UtilisateurController::class, 'rechercherCommandes'])->name('rechercher.commandes');
-
-
-
-Route::get('/utilisateur/statistiques', [UtilisateurController::class, 'statistiques'])->name('utilisateur.statistiques');
+    Route::post('/utilisateur/completer-profil', [UtilisateurController::class, 'completerProfil'])->name('utilisateur.completerprofil');
+    Route::post('/commandes/{id}/increment', [CommandeController::class, 'increment'])->name('commandes.increment');
+    Route::post('/commandes/{id}/decrement', [CommandeController::class, 'decrement'])->name('commandes.decrement');
+    Route::post('/commandes/{id}/confirm', [CommandeController::class, 'confirm'])->name('commandes.confirm');
+    Route::post('/commandes/{id}/cancel', [CommandeController::class, 'cancel'])->name('commandes.cancel');
+    Route::get('/filtrer/commandes', [CommandeController::class, 'filtrerCommandes'])->name('filtrer.commandes');
+    Route::get('/utilisateur/statistiques', [UtilisateurController::class, 'statistiques'])->name('utilisateur.statistiques');
 
     Route::get('/utilisateur/mescommandes', [UtilisateurController::class, 'mesCommandes'])->name('utilisateur.mescommandes');
     Route::get('/commandes/create', [CommandeController::class, 'create'])->name('commandes.create');
     Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
     Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
-    // Route::get('/commandes/{commande}/edit', [CommandeController::class, 'edit'])->name('commandes.edit');
-    // Route::put('/commandes/{commande}', [CommandeController::class, 'update'])->name('commandes.update');
-    // Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy'])->name('commandes.destroy');
 });
 
 Route::get('/produits/page', [ProduitController::class, 'Page'])->name('produits.page');
@@ -96,5 +97,14 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::get('/search', [ProduitController::class, 'search'])->name('produits.search');
 Route::post('/contact', [ContactController::class, 'storeContact'])->name('contact.store');
 Route::post('/contact', [ContactController::class, 'storeContact'])->name('contact.store');
-Route::get('/admin/contacts', [ContactController::class, 'showContacts'])->name('admin.contacts');
 
+
+Route::group(['middleware' => 'administrateur'], function () {
+
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('administrateur.dashboard');
+    Route::get('/pharmacien/index', [pharmacienController::class, 'AllPharmaciens'])->name('pharmacien.index');
+    Route::delete('/pharmaciens/{id}', [PharmacienController::class, 'destroy'])->name('pharmaciens.destroy');
+    Route::get('utilisateur/index', [UtilisateurController::class, 'Allclients'])->name('client.index');
+    Route::delete('/users/{id}', [UtilisateurController::class, 'destroy'])->name('users.destroy');
+    Route::get('/admin/contacts', [ContactController::class, 'showContacts'])->name('admin.contacts');
+});

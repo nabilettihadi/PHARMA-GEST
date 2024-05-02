@@ -8,9 +8,22 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        @media (min-width: 768px) {
 
+    <style>
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .chart-container canvas {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                flex-direction: row;
+            }
 
             .burger-dropdown {
                 display: none;
@@ -51,12 +64,15 @@
         <!-- Dropdown pour le burger menu -->
         <div class="burger-dropdown bg-gray-800 text-white py-2 px-4">
             <ul class="space-y-2">
-                <li><a href="{{ route('utilisateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('administrateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
-                <li><a href="{{ route('utilisateur.mescommandes') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-tasks mr-2"></i>Mes commandes</a></li>
 
-                <li><a href="{{ route('utilisateur.statistiques') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('pharmacien.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-cube mr-2"></i>Gestion des Pharmaciens</a></li>
+                
+                <li><a href="{{ route('client.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-cube mr-2"></i>Gestion des Clients</a></li>
+                <li><a href="{{ route('statistiques.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
 
                 <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
@@ -78,13 +94,14 @@
         </div>
         <nav class="flex-1 py-4">
             <ul class="space-y-2">
-                <li><a href="{{ route('utilisateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('administrateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
-                <li><a href="{{ route('utilisateur.mescommandes') }}"
-                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tasks mr-2"></i>Mes
-                        commandes</a></li>
 
-                <li><a href="{{ route('utilisateur.statistiques') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('pharmacien.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-cube mr-2"></i>Gestion des pharmaciens</a></li>
+                <li><a href="{{ route('client.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                             class="fas fa-cube mr-2"></i>Gestion des clients</a></li>
+                <li><a href="{{ route('statistiques.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
 
                 <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
@@ -109,10 +126,25 @@
         });
     </script>
 
+<div class="container mx-auto px-4 py-4">
+    <h1 class="text-2xl font-semibold mb-4">Liste des utilisateurs</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        @foreach($users as $user)
+        <div class="bg-white rounded-lg shadow-md p-4">
+            <h2 class="text-lg font-semibold">{{ $user->name }}</h2>
+            <p class="text-gray-600">{{ $user->email }}</p>
+            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="mt-4">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">
+                    Supprimer
+                </button>
+            </form>
+        </div>
+        @endforeach
+    </div>
+</div>
 
-
-        
-
-    </body>
+</body>
 
 </html>

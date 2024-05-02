@@ -8,9 +8,22 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        @media (min-width: 768px) {
 
+    <style>
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .chart-container canvas {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                flex-direction: row;
+            }
 
             .burger-dropdown {
                 display: none;
@@ -51,18 +64,24 @@
         <!-- Dropdown pour le burger menu -->
         <div class="burger-dropdown bg-gray-800 text-white py-2 px-4">
             <ul class="space-y-2">
-                <li><a href="{{ route('utilisateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('administrateur.dashboard') }}"
+                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
-                <li><a href="{{ route('utilisateur.mescommandes') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-tasks mr-2"></i>Mes commandes</a></li>
 
-                <li><a href="{{ route('utilisateur.statistiques') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
+                <li><a href="{{ route('pharmacien.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-user-md mr-2"></i>Gestion des Pharmaciens</a></li>
+
+                <li><a href="{{ route('client.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-user-friends mr-2"></i>Gestion des Clients</a></li>
+
+                <li><a href="{{ route('admin.contacts') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-envelope-open-text mr-2"></i>Contacts</a></li>
 
                 <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
             </ul>
         </div>
+
     </div>
 
     <!-- Sidebar -->
@@ -78,14 +97,16 @@
         </div>
         <nav class="flex-1 py-4">
             <ul class="space-y-2">
-                <li><a href="{{ route('utilisateur.dashboard') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                <li><a href="{{ route('administrateur.dashboard') }}"
+                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a></li>
-                <li><a href="{{ route('utilisateur.mescommandes') }}"
-                        class="block py-2 px-4 text-sm hover:bg-gray-700"><i class="fas fa-tasks mr-2"></i>Mes
-                        commandes</a></li>
 
-                <li><a href="{{ route('utilisateur.statistiques') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
-                            class="fas fa-chart-line mr-2"></i>Statistiques</a></li>
+                <li><a href="{{ route('pharmacien.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-user-md mr-2"></i>Gestion des pharmaciens</a></li>
+                <li><a href="{{ route('client.index') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-user-friends mr-2"></i>Gestion des clients</a></li>
+                <li><a href="{{ route('admin.contacts') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
+                            class="fas fa-envelope-open-text mr-2"></i>Contacts</a></li>
 
                 <li><a href="{{ route('logout') }}" class="block py-2 px-4 text-sm hover:bg-gray-700"><i
                             class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a></li>
@@ -109,10 +130,41 @@
         });
     </script>
 
+    <div class="container mx-auto px-4 py-8 ml-64">
+        <h1 class="text-2xl font-semibold mb-4">Messages des contacts</h1>
+
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
+
+        @if ($contacts->isEmpty())
+            <div class="bg-gray-200 px-4 py-2 rounded-md mb-4">
+                <p class="text-gray-800">Aucun message de contact trouvé.</p>
+            </div>
+        @else
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                @foreach ($contacts as $contact)
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-lg font-semibold">{{ $contact->name }}</h2>
+                                <span class="text-gray-600">{{ $contact->created_at->format('d/m/Y H:i') }}</span>
+                            </div>
+                            <p class="text-gray-600">{{ $contact->email }}</p>
+                            <p class="text-gray-600">{{ $contact->phone }}</p>
+                        </div>
+                        <div class="px-6 pb-4 border-t border-gray-200">
+                            <p class="text-gray-700">{{ $contact->message }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </div>
 
 
-        
-
-    </body>
+</body>
 
 </html>

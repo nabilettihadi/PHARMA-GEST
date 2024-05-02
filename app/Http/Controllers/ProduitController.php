@@ -11,27 +11,26 @@ class ProduitController extends Controller
 {
     public function index()
     {
-        // Récupérer l'utilisateur connecté
+
         $user = Auth::user();
-    
-        // Récupérer les produits créés par cet utilisateur
+
         $produits = Produit::where('user_id', $user->id)->get();
-    
+
         return view('produits.index', compact('produits'));
     }
+
     public function welcome()
     {
         $produits = Produit::all();
         return view('welcome', compact('produits'));
     }
+    
     public function Page()
-{
-    // Récupérez tous les produits depuis la base de données avec pagination
-    $produits = Produit::paginate(10); // Vous pouvez ajuster le nombre de produits par page
+    {
+        $produits = Produit::paginate(10);
 
-    // Retournez la vue 'produits.page' en passant les produits récupérés comme données
-    return view('produits.page', compact('produits'));
-}
+        return view('produits.page', compact('produits'));
+    }
 
 
     public function create()
@@ -40,32 +39,31 @@ class ProduitController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'nom' => 'required|string|max:255',
-        'description' => 'required|string',
-        'prix' => 'required|numeric',
-        'quantite' => 'required|integer',
-        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'description' => 'required|string',
+            'prix' => 'required|numeric',
+            'quantite' => 'required|integer',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    // Récupérer l'utilisateur connecté
-    $user = Auth::user();
 
-    // Créer un nouveau produit associé à l'utilisateur actuel
-    $produit = new Produit($request->all());
-    $produit->user_id = $user->id; // Définir l'`user_id`
-    $produit->save();
+        $user = Auth::user();
 
-    // Gérer l'upload de la photo si elle est fournie
-    if ($request->hasFile('photo')) {
-        $photoPath = $request->file('photo')->store('produits', 'public');
-        $produit->photo = $photoPath;
+        $produit = new Produit($request->all());
+        $produit->user_id = $user->id;
         $produit->save();
-    }
 
-    return redirect()->route('produits.index')->with('success', 'Produit ajouté avec succès!');
-}
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('produits', 'public');
+            $produit->photo = $photoPath;
+            $produit->save();
+        }
+
+        return redirect()->route('produits.index')->with('success', 'Produit ajouté avec succès!');
+    }
 
 
     public function show($id)
@@ -124,21 +122,15 @@ class ProduitController extends Controller
 
         return view('statistiques.index', compact('statistiquesQuantite', 'statistiquesMontant'));
     }
-    
+
     public function search(Request $request)
-{
-    $query = $request->input('query');
+    {
+        $query = $request->input('query');
 
-    // Logique de recherche ici (par exemple, recherchez dans la base de données)
+        $produits = Produit::where('nom', 'like', '%' . $query . '%')->get();
 
-    // Exemple de recherche factice
-    $produits = Produit::where('nom', 'like', '%' . $query . '%')->get();
-
-    return response()->json([
-        'produits' => $produits,
-    ]);
-}
-
-
-
+        return response()->json([
+            'produits' => $produits,
+        ]);
+    }
 }

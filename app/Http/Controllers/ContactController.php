@@ -24,20 +24,20 @@ class ContactController extends Controller
             'email' => 'required|email|max:255',
             'message' => 'required|string',
         ]);
-    
-        // Créer un nouveau contact dans la base de données
+
+
         Contact::create($validatedData);
-    
-        // Rediriger avec un message de succès
+
+
         return redirect()->back()->with('success', 'Votre message a été envoyé avec succès ! Nous vous contacterons bientôt.');
     }
-    
+
     public function showContacts()
     {
-        // Récupérer tous les contacts depuis la base de données
+
         $contacts = Contact::all();
 
-        // Retourner la vue avec les contacts
+
         return view('admin.contacts', compact('contacts'));
     }
 }

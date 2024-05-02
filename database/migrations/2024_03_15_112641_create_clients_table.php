@@ -10,10 +10,10 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('utilisateur_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('adresse');
             $table->string('telephone');
-            $table->foreign('utilisateur_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -23,4 +23,3 @@ class CreateClientsTable extends Migration
         Schema::dropIfExists('clients');
     }
 }
-

@@ -28,6 +28,8 @@ class LoginController extends Controller
                 return redirect()->route('utilisateur.dashboard');
             } elseif (Auth::user()->role === 'pharmacien') {
                 return redirect()->route('pharmacien.dashboard');
+            } elseif (Auth::user()->role === 'administrateur') {
+                return redirect()->route('administrateur.dashboard');
             }
         }
 
