@@ -15,36 +15,35 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur v
 
 1. Clonez ce dépôt sur votre machine :
 
-   ```bash
-   git clone https://github.com/nabilettihadi/PHARMA-GEST.git
 
-    Accédez au répertoire du projet :
+git clone https://github.com/nabilettihadi/PHARMA-GEST.git
 
-    bash
+### Accédez au répertoire du projet :
+
+
 
 cd PHARMA-GEST
 
-Installez les dépendances PHP avec Composer :
+### Installez les dépendances PHP avec Composer :
 
-bash
 
 composer install
 
-Copiez le fichier .env.example et renommez-le en .env :
+### Copiez le fichier .env.example et renommez-le en .env :
 
-bash
+
 
 cp .env.example .env
 
-Générez la clé d'application Laravel :
+### Générez la clé d'application Laravel :
 
-bash
+
 
 php artisan key:generate
 
-Configurez votre base de données dans le fichier .env :
+### Configurez votre base de données dans le fichier .env :
 
-plaintext
+
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -53,19 +52,19 @@ DB_DATABASE=nom_de_votre_base_de_donnees
 DB_USERNAME=votre_nom_utilisateur
 DB_PASSWORD=votre_mot_de_passe
 
-Exécutez les migrations pour créer les tables de base de données :
+### Exécutez les migrations pour créer les tables de base de données :
 
-bash
+
 
 php artisan migrate
 
-Lancez le serveur de développement :
+### Lancez le serveur de développement :
 
-bash
+
 
     php artisan serve
 
-    Accédez à l'application dans votre navigateur à l'adresse http://localhost:8000.
+Accédez à l'application dans votre navigateur à l'adresse http://localhost:8000.
 
 ## Fonctionnalités
 
