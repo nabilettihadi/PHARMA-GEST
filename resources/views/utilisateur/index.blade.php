@@ -10,20 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        .chart-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .chart-container canvas {
-            width: 100%;
-        }
 
         @media (min-width: 768px) {
-            .chart-container {
-                flex-direction: row;
-            }
 
             .burger-dropdown {
                 display: none;
@@ -128,7 +116,7 @@
         });
     </script>
 
-<div class="container mx-auto px-4 py-4">
+<div class="container mx-auto px-4 py-4 ml-64">
     <h1 class="text-2xl font-semibold mb-4">Liste des utilisateurs</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach($users as $user)

@@ -25,10 +25,9 @@ class PharmacienController extends Controller
 {
     $pharmacien = User::findOrFail($id);
 
-    // Supprimer d'abord les enregistrements liés dans les autres tables, par exemple dans la table pharmacien
+
     $pharmacien->pharmacien()->delete();
 
-    // Ensuite, supprimer l'utilisateur même s'il existe des enregistrements liés
     $pharmacien->forceDelete();
 
     return redirect()->route('pharmacien.index')->with('success', 'Pharmacien supprimé avec succès');
@@ -47,11 +46,11 @@ class PharmacienController extends Controller
 
         $user = Auth::user();
 
-        // Mettre à jour les informations de base de l'utilisateur
+
         $user->adresse = $request->adresse;
         $user->telephone = $request->telephone;
 
-        // Vérifier si le pharmacien a déjà un profil enregistré
+
         if (!$user->pharmacien) {
             $pharmacien = new Pharmacien([
                 'user_id' => $user->id,

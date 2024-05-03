@@ -148,7 +148,7 @@
 
         <!-- Affichage des utilisateurs avec leurs produits -->
         @foreach ($utilisateursAvecProduits as $utilisateur)
-            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden mt-4">
                 <div class="p-6">
                     <h2 class="text-lg font-semibold text-gray-800">{{ $utilisateur->name }}</h2>
                     <p class="text-gray-600">Nombre de produits : {{ $utilisateur->produits->count() }}</p>
@@ -161,9 +161,9 @@
             </div>
         @endforeach
 
-        <!-- Affichage du nombre de commandes par client -->
+        
         @foreach ($commandesParClient as $client)
-            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden mt-4">
                 <div class="p-6">
                     <h2 class="text-lg font-semibold text-gray-800">{{ $client->name }}</h2>
                     <p class="text-gray-600">Commandes : {{ $client->commandes->count() }}</p>

@@ -96,11 +96,37 @@ class CommandeController extends Controller
     public function confirm($id)
     {
         $commande = Commande::findOrFail($id);
+
+        $produit = $commande->produits;
+
+        if (!$produit) {
+            return redirect()->back()->with('error', 'La commande ne contient pas de produit associé.');
+        }
+
+
+        if ($commande->quantite > $produit->quantite) {
+            return redirect()->back()->with('error', 'La quantité commandée est supérieure à la quantité disponible.');
+        }
+
+        $produit->quantite -= $commande->quantite;
+
+
+        $produit->save();
+
+
         $commande->etat = 'Confirmée';
         $commande->save();
 
-        return redirect()->back();
+
+        if ($produit->quantite < 0) {
+            $produit->delete();
+        }
+
+        return redirect()->back()->with('success', 'Commande confirmée avec succès.');
     }
+
+
+
 
     public function cancel($id)
     {
@@ -111,18 +137,17 @@ class CommandeController extends Controller
     }
 
     public function filtrerCommandes(Request $request)
-{
-    $etat = $request->input('etat');
+    {
+        $etat = $request->input('etat');
 
-    if ($etat === 'Tous') {
-        $commandes = Commande::all();
-    } elseif ($etat === 'En attente' || $etat === 'Confirmée') {
-        $commandes = Commande::where('etat', $etat)->get();
-    } else {
-        $commandes = Commande::all(); // Par défaut, récupérer toutes les commandes si aucun état spécifié
+        if ($etat === 'Tous') {
+            $commandes = Commande::all();
+        } elseif ($etat === 'En attente' || $etat === 'Confirmée') {
+            $commandes = Commande::where('etat', $etat)->get();
+        } else {
+            $commandes = Commande::all();
+        }
+
+        return view('utilisateur.mescommandes', ['commandes' => $commandes]);
     }
-
-    return view('utilisateur.mescommandes', ['commandes' => $commandes]);
-}
-
 }

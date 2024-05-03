@@ -18,8 +18,8 @@ class CreateContactsTable extends Migration
             $table->string('name');
             $table->string('street');
             $table->string('city');
-            $table->unsignedInteger('postcode'); // Définir le code postal comme un entier sans signe
-            $table->unsignedBigInteger('phone'); // Définir le numéro de téléphone comme un entier long sans signe
+            $table->unsignedInteger('postcode');
+            $table->unsignedBigInteger('phone'); 
             $table->string('email');
             $table->text('message');
             $table->timestamps();
