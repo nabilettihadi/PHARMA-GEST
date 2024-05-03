@@ -83,7 +83,7 @@ Accédez à l'application dans votre navigateur à l'adresse http://localhost:80
 
 ## Auteur
 
-Ce projet a été créé par Votre Nom.
+Ce projet a été créé par Nabil Ettihadi.
 
 ## Contribuer
 
